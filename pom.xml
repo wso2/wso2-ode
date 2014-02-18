@@ -39,7 +39,7 @@
         </repository>
         <snapshotRepository>
             <id>wso2.snapshots</id>
-            <name>Apache Snapshot Repository</name>
+            <name>WSO2 Snapshot Repository</name>
             <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
 <!--
