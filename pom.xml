@@ -181,6 +181,7 @@
         <!--module>axis2-war</module-->
         <!--module>bpel-itest</module-->
 	<module>bpel-extensions</module>
+	<module>orbit</module>
     </modules>
 
     <build>
@@ -1245,6 +1246,7 @@ And then run this profile, those classes with @ChannelType will be regenerated. 
                 <!--module>axis2-war</module>
                 <module>bpel-itests</module-->
                 <module>distro</module>
+		<module>orbit</module>
             </modules>
         </profile>
     </profiles>
