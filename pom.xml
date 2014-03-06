@@ -196,8 +196,8 @@
         <module>distro/src/examples-jbi/maven2/ping-pong-osgi</module>-->
         <!--module>axis2-war</module-->
         <!--module>bpel-itest</module-->
-	<!--module>bpel-extensions/e4x</module-->
-	<module>bpel-extensions/long-running</module>
+	<!--module>bpel-extensions/e4x</module>
+	<module>bpel-extensions/long-running</module-->
 	<module>orbit</module>
     </modules>
 
