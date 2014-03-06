@@ -61,7 +61,7 @@
         </dependency>
     </dependencies>
 
-    <!--build>
+    <build>
          <plugins>
           <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
@@ -91,5 +91,5 @@
                  </configuration>
              </plugin>
          </plugins>
-       </build-->
+       </build>
 </project>
