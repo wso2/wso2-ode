@@ -45,25 +45,20 @@
         <url>http://svn.apache.org/repos/asf/ode/</url>
     </scm>
 
-  <distributionManagement>
+    <distributionManagement>
         <repository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
             <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
         </repository>
+
         <snapshotRepository>
             <id>wso2.snapshots</id>
             <name>WSO2 Snapshot Repository</name>
             <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
-<!--
-        <snapshotRepository>
-            <id>wso2-maven2-snapshot-repository</id>
-            <name>WSO2 Maven2 Snapshot Repository</name>
-            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/snapshots/maven2/</url>
-        </snapshotRepository>
--->
-   </distributionManagement>
+    </distributionManagement>
+
     <mailingLists>
         <mailingList>
             <name>Apache ODE Users List</name>
@@ -364,18 +359,12 @@
         |
     -->
     <repositories>
+        <!-- Before adding ANYTHING in here, please start a discussion on the dev list.
+             Ideally the Axis2 build should only use Maven central (which is available
+             by default) and nothing else. We had troubles with other repositories in
+             the past. Therefore configuring additional repositories here should be
+             considered very carefully. -->
         <repository>
-            <id>servicemix-repo</id>
-            <name>ServiceMix Repository</name>
-            <url>https://repository.apache.org/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-	<repository>
             <id>wso2-nexus</id>
             <name>WSO2 internal Repository</name>
             <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
@@ -385,6 +374,7 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </repository>
+
         <repository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
@@ -395,6 +385,7 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </repository>
+
         <repository>
             <id>wso2.snapshots</id>
             <name>WSO2 Snapshot Repository</name>
@@ -407,150 +398,10 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-        <!--
-        <repository>
-          <id>servicemix</id>
-          <name>Apache ServiceMix Repository</name>
-          <url>http://svn.apache.org/repos/asf/servicemix/m2-repo</url>
-          <releases>
-            <enabled>true</enabled>
-          </releases>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-        </repository>
-        -->
-        <repository>
-            <id>saxon-repo</id>
-            <name>Saxon Repo</name>
-            <url>http://people.apache.org/~rr/saxon-repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>central</id>
-            <name>Apache Maven Repo</name>
-            <url>http://repo1.maven.org/maven2/</url>
-        </repository>
-    </repositories>
-
-    <!--
-    <repositories>
-        <repository>
-            <id>central</id>
-            <name>Maven Repository Switchboard</name>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>ibiblio</id>
-            <name>ibiblio</name>
-            <url>http://www.ibiblio.org/maven2</url>
-        </repository>
-        <repository>
-            <id>apache.snapshots</id>
-            <name>Apache snapshots</name>
-            <url>http://repository.apache.org/snapshots/</url>
-        </repository>
-        <repository>
-            <id>intalio</id>
-            <name>ODE Maven2 repository</name>
-            <url>http://pxe.intalio.org/public/maven2</url>
-        </repository>
-        <repository>
-            <id>JBoss</id>
-            <name>JBoss Repository</name>
-            <url>http://repository.jboss.com/maven2/</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
-          <id>central</id>
-          <name>Maven Repository Switchboard</name>
-          <url>http://repo1.maven.org/maven2</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>ibiblio</id>
-            <name>ibiblio</name>
-            <url>http://www.ibiblio.org/maven2</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>apache.snapshots</id>
-            <name>Apache snapshots</name>
-            <url>http://repository.apache.org/snapshots/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>intalio</id>
-            <name>Intalio Maven2 repository</name>
-            <url>http://pxe.intalio.org/public/maven2</url>
-        </pluginRepository>
-    </pluginRepositories>
-
--->
-
-    <pluginRepositories>
-	<pluginRepository> 
-            <id>repository.dev.java.net-maven2</id>
-	    <name>Java.net Repository for Maven</name> 
-	    <url>http://download.java.net/maven/2/</url> 
-	    <layout>default</layout> 
-	</pluginRepository>
-        <pluginRepository>
-            <id>servicemix-repo</id>
-            <name>ServiceMix Repository</name>
-            <url>https://repository.apache.org/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>wso2-nexus</id>
-            <name>WSO2 internal Repository</name>
-            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-        </pluginRepository>
-
-        <!--
-        <repository>
-          <id>servicemix</id>
-          <name>Apache ServiceMix Repository</name>
-          <url>http://svn.apache.org/repos/asf/servicemix/m2-repo</url>
-          <releases>
-            <enabled>true</enabled>
-          </releases>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-        </repository>
-        -->
-        <pluginRepository>
-            <id>saxon-repo</id>
-            <name>Saxon Repo</name>
-            <url>http://people.apache.org/~rr/saxon-repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>central</id>
-            <name>Apache Maven Repo</name>
-            <url>http://repo1.maven.org/maven2/</url>
-        </pluginRepository>
-	<pluginRepository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
             <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
@@ -560,9 +411,10 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </pluginRepository>
+
         <pluginRepository>
             <id>wso2.snapshots</id>
-            <name>Apache Snapshot Repository</name>
+            <name>WSO2 Snapshot Repository</name>
             <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
@@ -570,6 +422,16 @@
             </snapshots>
             <releases>
                 <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </pluginRepository>
     </pluginRepositories>
