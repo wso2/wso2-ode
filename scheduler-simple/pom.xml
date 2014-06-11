@@ -94,11 +94,11 @@
           <artifactId>geronimo-j2ee-connector_1.5_spec</artifactId>
       <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--dependency>
           <groupId>org.apache.geronimo.specs</groupId>
           <artifactId>geronimo-ejb_2.1_spec</artifactId>
       <scope>test</scope>
-        </dependency>
+        </dependency-->
         <dependency>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
