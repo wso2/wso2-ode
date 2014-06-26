@@ -151,6 +151,17 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         _immediateTransactionRetryLimit = getIntProperty(conf, "ode.scheduler.immediateTransactionRetryLimit", _immediateTransactionRetryLimit);
         _immediateTransactionRetryInterval = getLongProperty(conf, "ode.scheduler.immediateTransactionRetryInterval", _immediateTransactionRetryInterval);
 
+        if (__log.isDebugEnabled()) {
+            __log.debug("ode.scheduler.queueLength == " + _todoLimit);
+            __log.debug("ode.scheduler.immediateInterval == " + _immediateInterval);
+            __log.debug("ode.scheduler.nearFutureInterval == " + _nearFutureInterval);
+            __log.debug("ode.scheduler.staleInterval == " + _staleInterval);
+            __log.debug("ode.scheduler.transactionsPerSecond == " + _tps);
+            __log.debug("ode.scheduler.warningDelay == " + _warningDelay);
+            __log.debug("ode.scheduler.immediateTransactionRetryLimit == " + _immediateTransactionRetryLimit);
+            __log.debug("ode.scheduler.immediateTransactionRetryInterval == " + _immediateTransactionRetryInterval);
+        }
+
         _todo = new SchedulerThread(this);
     }
 
@@ -560,7 +571,7 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
                         // it the synchronization is a best-effort but not perfect.
                         __log.debug("job no longer in db forced rollback: "+job);
                     } catch (final Exception ex) {
-                        __log.error("Error while processing a "+(job.persisted?"":"non-")+"persisted job"+(needRetry[0] && job.persisted?": ":", no retry: ")+job, ex);
+                        __log.warn("Error while processing a "+(job.persisted?"":"non-")+"persisted job"+(needRetry[0] && job.persisted?": ":", no retry: ")+job, ex);
 
                         // We only get here if the above execTransaction fails, so that transaction got
                         // rollbacked already
@@ -574,7 +585,7 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
                                             long delay = (long)(Math.pow(5, retry));
                                             job.schedDate = System.currentTimeMillis() + delay*1000;
                                             _db.updateJob(job);
-                                            __log.error("Error while processing job, retrying in " + delay + "s");
+                                            __log.warn("Error while processing job, retrying in " + delay + "s");
                                         } else {
                                             _db.deleteJob(job.jobId, _nodeId);
                                             __log.error("Error while processing job after 10 retries, no more retries:" + job);
