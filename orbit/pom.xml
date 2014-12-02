@@ -515,7 +515,7 @@
                     <artifactId>saxon-xqj</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.apache.axis2</groupId>
+                    <groupId>org.apache.axis2.transport</groupId>
                     <artifactId>axis2-transport-jms</artifactId>
                 </exclusion>
                 <exclusion>
