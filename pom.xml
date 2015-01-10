@@ -101,10 +101,10 @@
         <axiom.version>1.2.11-wso2v5</axiom.version>
         <exp.pkg.version.axiom>1.2.11.wso2v5</exp.pkg.version.axiom>
         <imp.pkg.version.axiom>[1.2.11.wso2v5, 1.3.0)</imp.pkg.version.axiom>
-        <axis2.version>1.6.1-wso2v11-SNAPSHOT</axis2.version>
-        <exp.pkg.version.axis2>1.6.1.wso2v11-SNAPSHOT</exp.pkg.version.axis2>
-        <imp.pkg.version.axis2>[1.6.1.wso2v11-SNAPSHOT, 1.7.0)</imp.pkg.version.axis2>
-        <rampart.version>1.6.1-wso2v2</rampart.version>
+        <axis2.version>1.6.1-wso2v11</axis2.version>
+        <exp.pkg.version.axis2>1.6.1.wso2v11</exp.pkg.version.axis2>
+        <imp.pkg.version.axis2>[1.6.1.wso2v11, 1.7.0)</imp.pkg.version.axis2>
+        <rampart.version>1.6.1-wso2v9</rampart.version>
         <commons.codec.version>1.3</commons.codec.version>
         <backport.concurrent.version>3.1</backport.concurrent.version>
         <commons.fileupload.version>1.2</commons.fileupload.version>
@@ -163,8 +163,9 @@
         <activemq.version>4.1.1</activemq.version>
         <xml-apis.version>1.3.04</xml-apis.version>
         <servicemix.nmr.version>1.1.0</servicemix.nmr.version>
-        <axis2.transport.version>1.6.1-wso2v11-SNAPSHOT</axis2.transport.version>
+        <axis2.transport.version>1.1.0-wso2v10-SNAPSHOT</axis2.transport.version>
 	<rhino.version>1.7R1</rhino.version>
+	<orbit.version.hazelcast>3.2.6.wso2v3</orbit.version.hazelcast>
     </properties>
 
     <modules>
@@ -1020,7 +1021,7 @@
                 <version>${axis2.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.axis2</groupId>
+                <groupId>org.apache.axis2.transport</groupId>
                 <artifactId>axis2-transport-jms</artifactId>
                 <version>${axis2.transport.version}</version>
             </dependency>
@@ -1050,6 +1051,11 @@
                 <!--version>1.1.117</version-->
                 <version>1.2.140</version>
             </dependency>
+	     <dependency>
+          	<groupId>com.hazelcast.wso2</groupId>
+          	<artifactId>hazelcast</artifactId>
+		<version>${orbit.version.hazelcast}</version>
+      	     </dependency>
         </dependencies>
     </dependencyManagement>
     <profiles>
