@@ -165,6 +165,7 @@
         <servicemix.nmr.version>1.1.0</servicemix.nmr.version>
         <axis2.transport.version>1.1.0-wso2v10-SNAPSHOT</axis2.transport.version>
 	<rhino.version>1.7R1</rhino.version>
+	<orbit.version.hazelcast>3.2.6.wso2v3</orbit.version.hazelcast>
     </properties>
 
     <modules>
@@ -1050,6 +1051,11 @@
                 <!--version>1.1.117</version-->
                 <version>1.2.140</version>
             </dependency>
+	     <dependency>
+          	<groupId>com.hazelcast.wso2</groupId>
+          	<artifactId>hazelcast</artifactId>
+		<version>${orbit.version.hazelcast}</version>
+      	     </dependency>
         </dependencies>
     </dependencyManagement>
     <profiles>
