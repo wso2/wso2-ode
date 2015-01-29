@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HMessageExchange"
+        table="BPEL_MESSAGE_EXCHANGE"
+        dynamic-update="true"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HMessageExchange.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <property
+            name="portType"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="PORT_TYPE"
+        />
+
+        <property
+            name="channelName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="CHANNEL_NAME"
+        />
+
+        <property
+            name="clientKey"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="CLIENTKEY"
+        />
+
+        <property
+            name="endpoint"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="ENDPOINT" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <property
+            name="callbackEndpoint"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="CALLBACK_ENDPOINT" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <many-to-one
+            name="request"
+            class="org.apache.ode.daohib.bpel.hobj.HMessage"
+            cascade="delete"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="REQUEST"
+        />
+
+        <many-to-one
+            name="response"
+            class="org.apache.ode.daohib.bpel.hobj.HMessage"
+            cascade="delete"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="RESPONSE"
+        />
+
+        <property
+            name="insertTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            column="INSERT_DT"
+        />
+
+        <property
+            name="operationName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="OPERATION"
+        />
+
+        <property
+            name="state"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="STATE"
+        />
+
+        <many-to-one
+            name="process"
+            class="org.apache.ode.daohib.bpel.hobj.HProcess"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PROCESS"
+        />
+
+        <many-to-one
+            name="instance"
+            class="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PIID"
+        />
+
+        <property
+            name="direction"
+            type="char"
+            update="true"
+            insert="true"
+            column="DIR"
+        />
+
+        <property
+            name="partnerLinkModelId"
+            type="int"
+            update="true"
+            insert="true"
+            column="PLINK_MODELID"
+        />
+
+        <property
+            name="pattern"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="PATTERN"
+        />
+
+        <property
+            name="correlationStatus"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="CORR_STATUS"
+        />
+
+        <property
+            name="fault"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="FAULT_TYPE"
+        />
+
+        <property
+            name="faultExplanation"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="FAULT_EXPL"
+        />
+
+        <property
+            name="callee"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="CALLEE"
+        />
+
+        <map
+            name="properties"
+            table="BPEL_MEX_PROPS"
+            lazy="true"
+            sort="unsorted"
+            cascade="delete"
+        >
+
+            <key
+                column="MEX"
+                  foreign-key="none"
+            >
+            </key>
+
+            <index
+                column="NAME"
+                type="string"
+            />
+
+            <element
+                column="VALUE"
+                type="string"
+                length="8000"
+                not-null="false"
+                unique="false"
+            />
+
+        </map>
+
+        <many-to-one
+            name="partnerLink"
+            class="org.apache.ode.daohib.bpel.hobj.HPartnerLink"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PARTNERLINK"
+        />
+
+        <property
+            name="pipedMessageExchangeId"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="PIPED_ID"
+        />
+
+        <property
+            name="subscriberCount"
+            type="int"
+            update="true"
+            insert="true"
+            column="SUBSCRIBER_COUNT"
+        />
+
+        <bag
+            name="attachments"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+        >
+
+            <key
+                column="MESSAGE_EXCHANGE_ID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HAttachment"
+            />
+
+      </bag>
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HMessageExchange.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_MEX_IDS_BY_INSTANCES"><![CDATA[
+            select id from HMessageExchange as m where m.instance in (:instances)
+        ]]></query>
+        <query name="SELECT_UNMATCHED_MEX_BY_INSTANCES"><![CDATA[
+            from HMessageExchange as m where m in(select cm.messageExchange from HCorrelatorMessage as cm where cm.messageExchange.instance in (:instances))
+        ]]></query>
+
+</hibernate-mapping>

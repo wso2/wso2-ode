@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.store.hib.ProcessConfDaoImpl"
+        table="STORE_PROCESS"
+    >
+
+        <id
+            name="PID_"
+            type="java.lang.String"
+        >
+                <column
+                    name="PID" 
+                    not-null="true"
+                />
+            <generator class="assigned">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-ProcessConfDaoImpl.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <many-to-one
+            name="deploymentUnit"
+            class="org.apache.ode.store.hib.DeploymentUnitDaoImpl"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+        >
+            <column
+                name="DU" 
+            />
+        </many-to-one>
+
+        <map
+            name="properties_"
+            table="STORE_PROCESS_PROP"
+            lazy="false"
+            sort="unsorted"
+            cascade="none"
+        >
+
+            <key
+                column="propId"
+                  foreign-key="none"
+            >
+            </key>
+
+            <index
+                column="name"
+                type="string"
+            />
+
+            <element
+                column="value"
+                type="string"
+                length="2048"
+                not-null="false"
+                unique="false"
+            />
+
+        </map>
+
+        <property
+            name="type_"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="TYPE"
+        />
+
+        <property
+            name="version"
+            type="long"
+            update="true"
+            insert="true"
+            column="version"
+        />
+
+        <property
+            name="state_"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="STATE"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-ProcessConfDaoImpl.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

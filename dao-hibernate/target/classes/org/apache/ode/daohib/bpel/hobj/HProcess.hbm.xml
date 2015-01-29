@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HProcess"
+        table="BPEL_PROCESS"
+        lazy="false"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HProcess.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <set
+            name="messageExchanges"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+            sort="unsorted"
+        >
+
+            <key
+                column="PROCESS"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HMessageExchange"
+            />
+
+        </set>
+
+        <set
+            name="correlators"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+            sort="unsorted"
+        >
+
+            <key
+                column="PROCESS_ID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HCorrelator"
+            />
+
+        </set>
+
+        <bag
+            name="instances"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+        >
+
+            <key
+                column="PROCESS_ID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+            />
+
+      </bag>
+
+        <bag
+            name="events"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+        >
+
+            <key
+                column="PID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HBpelEvent"
+            />
+
+      </bag>
+
+        <set
+            name="deploymentPartnerLinks"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+            sort="unsorted"
+        >
+
+            <key
+                column="PROCESS"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HPartnerLink"
+            />
+
+        </set>
+
+        <property
+            name="processId"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="PROCID" 
+                not-null="true"
+                unique="true"
+            />
+        </property>
+
+        <property
+            name="deployer"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="deployer"
+        />
+
+        <property
+            name="deployDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            column="deploydate"
+        />
+
+        <property
+            name="typeName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="type_name"
+        />
+
+        <property
+            name="typeNamespace"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="type_ns"
+        />
+
+        <property
+            name="version"
+            type="long"
+            update="true"
+            insert="true"
+            column="version"
+        />
+
+        <property
+            name="active"
+            type="boolean"
+            update="true"
+            insert="true"
+            column="ACTIVE_"
+        />
+
+        <property
+            name="guid"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="guid"
+        />
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HProcess.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

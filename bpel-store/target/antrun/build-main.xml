@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <property name="maven.runtime.classpath" refid="maven.test.classpath"/>
+  <path id="classpath">
+    <pathelement path="${maven.runtime.classpath}"/>
+  </path>
+  <taskdef name="openjpac" classname="org.apache.openjpa.ant.PCEnhancerTask" classpathref="classpath"/>
+  <openjpac>
+    <fileset dir="/home/thilini/Documents/BPS/BuildSource/gitwork_Issue1/wso2-ode/bpel-store/src/main">
+      <include name="**/*.java"/>
+    </fileset>
+    <classpath>
+      <pathelement location="/home/thilini/Documents/BPS/BuildSource/gitwork_Issue1/wso2-ode/bpel-store/target/classes"/>
+      <pathelement path="${maven.runtime.classpath}"/>
+    </classpath>
+  </openjpac>
+</target>
+</project>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+        table="BPEL_INSTANCE"
+        lazy="true"
+        dynamic-update="true"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HProcessInstance.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <many-to-one
+            name="instantiatingCorrelator"
+            class="org.apache.ode.daohib.bpel.hobj.HCorrelator"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="INSTANTIATING_CORRELATOR"
+        />
+
+        <many-to-one
+            name="fault"
+            class="org.apache.ode.daohib.bpel.hobj.HFaultData"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="FAULT"
+        />
+
+        <property
+            name="jacobState"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="JACOB_STATE_DATA" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <bag
+            name="events"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+        >
+
+            <key
+                column="IID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HBpelEvent"
+            />
+
+      </bag>
+
+        <set
+            name="correlatorSelectors"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+            sort="unsorted"
+        >
+
+            <key
+                column="PIID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HCorrelatorSelector"
+            />
+
+        </set>
+
+        <set
+            name="messageExchanges"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+            sort="unsorted"
+        >
+
+            <key
+                column="PIID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HMessageExchange"
+            />
+
+        </set>
+
+        <property
+            name="previousState"
+            type="short"
+            update="true"
+            insert="true"
+            column="PREVIOUS_STATE"
+        />
+
+        <many-to-one
+            name="process"
+            class="org.apache.ode.daohib.bpel.hobj.HProcess"
+            cascade="none"
+            outer-join="true"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PROCESS_ID"
+        />
+
+        <property
+            name="processId"
+            type="java.lang.Long"
+            update="false"
+            insert="false"
+            column="PROCESS_ID"
+        />
+
+        <bag
+            name="scopes"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+        >
+
+            <key
+                column="PIID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HScope"
+            />
+
+      </bag>
+
+        <bag
+            name="correlationSets"
+            lazy="true"
+            inverse="true"
+            cascade="none"
+        >
+
+            <key
+                column="PIID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HCorrelationSet"
+            />
+
+      </bag>
+
+        <property
+            name="state"
+            type="short"
+            update="true"
+            insert="true"
+            column="STATE"
+        />
+
+        <property
+            name="lastActiveTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            column="LAST_ACTIVE_DT"
+        />
+
+        <property
+            name="sequence"
+            type="long"
+            update="true"
+            insert="true"
+            column="SEQUENCE"
+        />
+
+        <bag
+            name="activityRecoveries"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+        >
+
+            <key
+                column="PIID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HActivityRecovery"
+            />
+
+      </bag>
+
+        <property
+            name="activityFailureCount"
+            type="int"
+            update="true"
+            insert="true"
+            column="FAILURE_COUNT"
+        />
+
+        <property
+            name="activityFailureDateTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            column="FAILURE_DT"
+        />
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HProcessInstance.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="COUNT_FAILED_INSTANCES_BY_PROCESSES_IDS_AND_STATES"><![CDATA[
+            select i.process.processId as pid, count(i.id) as cnt, max(i.activityFailureDateTime) as lastFailureDt from HProcessInstance as i where i.process.processId in (:processIds) and i.state = 20 and i.activityFailureCount > 0 group by i.process.processId
+        ]]></query>
+        <query name="SELECT_INSTANCES_BY_PROCESS"><![CDATA[
+            from HProcessInstance as i where i.process = :process)
+        ]]></query>
+        <query name="SELECT_INSTANCES_BY_PROCESS_AND_STATES"><![CDATA[
+            from HProcessInstance as i where i.process = :process and i.state in (:states)
+        ]]></query>
+        <query name="COUNT_INSTANCES_BY_PROCESSES_IDS_AND_STATES"><![CDATA[
+            select i.process.processId as pid, count(i.id) as cnt from HProcessInstance as i where i.process.processId in (:processIds) and i.state in(:states) group by i.process.processId
+        ]]></query>
+
+</hibernate-mapping>

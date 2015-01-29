@@ -38,15 +38,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ode.bpel.common.BpelEventFilter;
 import org.apache.ode.bpel.common.InstanceFilter;
 import org.apache.ode.bpel.common.ProcessState;
-import org.apache.ode.bpel.dao.AttachmentDAO;
-import org.apache.ode.bpel.dao.BpelDAOConnection;
-import org.apache.ode.bpel.dao.CorrelationSetDAO;
-import org.apache.ode.bpel.dao.FilteredInstanceDeletable;
-import org.apache.ode.bpel.dao.MessageExchangeDAO;
-import org.apache.ode.bpel.dao.ProcessDAO;
-import org.apache.ode.bpel.dao.ProcessInstanceDAO;
-import org.apache.ode.bpel.dao.ProcessManagementDAO;
-import org.apache.ode.bpel.dao.ScopeDAO;
+import org.apache.ode.bpel.dao.*;
 import org.apache.ode.bpel.evt.BpelEvent;
 import org.apache.ode.bpel.evt.ScopeEvent;
 import org.apache.ode.bpel.iapi.ProcessConf.CLEANUP_CATEGORY;
@@ -417,5 +409,15 @@ public class BpelDAOConnectionImpl implements BpelDAOConnection, FilteredInstanc
         getSession().save(attachment);
         AttachmentDAOImpl attachmentDAO = new AttachmentDAOImpl(_sm,  attachment);
         return attachmentDAO;
+    }
+
+    @Override
+    public List<ActivityRecoveryDAO> getFailedActivities(int startNo, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public Object getCountOfAllFailedActivities() {
+        return null;
     }
 }

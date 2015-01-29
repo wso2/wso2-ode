@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HCorrelationProperty"
+        table="BPEL_CORRELATION_PROP"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HCorrelationProperty.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <property
+            name="name"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="NAME"
+        />
+
+        <property
+            name="namespace"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="NAMESPACE"
+        />
+
+        <property
+            name="value"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="VALUE"
+        />
+
+        <many-to-one
+            name="correlationSet"
+            class="org.apache.ode.daohib.bpel.hobj.HCorrelationSet"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="CORR_SET_ID"
+        />
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HCorrelationProperty.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_CORPROP_IDS_BY_INSTANCES"><![CDATA[
+            select id from HCorrelationProperty as p where p.correlationSet in(select s from HCorrelationSet as s where s.instance in (:instances))
+        ]]></query>
+
+</hibernate-mapping>

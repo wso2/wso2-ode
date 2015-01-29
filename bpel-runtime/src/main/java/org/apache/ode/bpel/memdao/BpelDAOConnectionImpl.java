@@ -396,4 +396,14 @@ class BpelDAOConnectionImpl implements BpelDAOConnection {
         __log.warn(message, ex);
         throw ex;
     }
+
+    @Override
+    public List<ActivityRecoveryDAO> getFailedActivities(int startNo, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public Object getCountOfAllFailedActivities() {
+        return null;
+    }
 }

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HScope"
+        table="BPEL_SCOPE"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HScope.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <set
+            name="correlationSets"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+            sort="unsorted"
+        >
+
+            <key
+                column="SCOPE_ID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HCorrelationSet"
+            />
+
+        </set>
+
+        <many-to-one
+            name="instance"
+            class="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PIID"
+        />
+
+        <many-to-one
+            name="parentScope"
+            class="org.apache.ode.daohib.bpel.hobj.HScope"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PARENT_SCOPE_ID"
+        />
+
+        <property
+            name="state"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="STATE"
+            not-null="true"
+        />
+
+        <property
+            name="name"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="NAME"
+            not-null="true"
+        />
+
+        <set
+            name="variables"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+            sort="unsorted"
+        >
+
+            <key
+                column="SCOPE_ID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HXmlData"
+            />
+
+        </set>
+
+        <set
+            name="partnerLinks"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+            sort="unsorted"
+        >
+
+            <key
+                column="SCOPE"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HPartnerLink"
+            />
+
+        </set>
+
+        <property
+            name="scopeModelId"
+            type="int"
+            update="true"
+            insert="true"
+            column="MODELID"
+        />
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HScope.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_SCOPE_IDS_BY_INSTANCES"><![CDATA[
+            select id from HScope as s where s.instance in (:instances)
+        ]]></query>
+
+</hibernate-mapping>
