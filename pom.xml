@@ -19,9 +19,8 @@
   ~ under the License.
   -->
 
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.wso2.bpel</groupId>
     <artifactId>ode</artifactId>
     <packaging>pom</packaging>
@@ -34,24 +33,42 @@
         supports both long and short living process executions to orchestrate all the services that
         are part of your application.
     </description>
+
     <url>http://ode.apache.org</url>
+
+    <parent>
+        <groupId>org.wso2</groupId>
+        <artifactId>wso2</artifactId>
+        <version>1</version>
+    </parent>
+
     <issueManagement>
         <system>jira</system>
         <url>https://issues.apache.org/jira/browse/ODE</url>
     </issueManagement>
-    <scm>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/ode/</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ode/</developerConnection>
-        <url>http://svn.apache.org/repos/asf/ode/</url>
-    </scm>
 
+    <!--<scm>-->
+    <!--<connection>scm:svn:http://svn.apache.org/repos/asf/ode/</connection>-->
+    <!--<developerConnection>scm:svn:https://svn.apache.org/repos/asf/ode/</developerConnection>-->
+    <!--<url>http://svn.apache.org/repos/asf/ode/</url>-->
+    <!--</scm>-->
+    <scm>
+        <url>https://github.com/wso2/wso2-ode.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/wso2-ode.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/wso2-ode.git</connection>
+        <tag>HEAD</tag>
+    </scm>
     <distributionManagement>
-        <repository>
+        <!--repository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
             <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+        </repository-->
+        <repository>
+            <id>nexus­releases</id>
+            <name>WSO2 Release Distribution Repository</name>
+            <url>http://maven.wso2.org/nexus/service/local/staging/deploy/maven2/</url>
         </repository>
-
         <snapshotRepository>
             <id>wso2.snapshots</id>
             <name>WSO2 Snapshot Repository</name>
@@ -164,8 +181,10 @@
         <xml-apis.version>1.3.04</xml-apis.version>
         <servicemix.nmr.version>1.1.0</servicemix.nmr.version>
         <axis2.transport.version>1.1.0-wso2v10</axis2.transport.version>
-	<rhino.version>1.7R1</rhino.version>
-	<orbit.version.hazelcast>3.2.6.wso2v3</orbit.version.hazelcast>
+        <rhino.version>1.7R1</rhino.version>
+        <orbit.version.hazelcast>3.2.6.wso2v3</orbit.version.hazelcast>
+
+	<project.scm.id>wso2-scm-server</project.scm.id>
     </properties>
 
     <modules>
@@ -201,14 +220,26 @@
         <module>distro/src/examples-jbi/maven2/ping-pong-osgi</module>-->
         <!--module>axis2-war</module-->
         <!--module>bpel-itest</module-->
-	<module>bpel-extensions/e4x</module>
-	<module>bpel-extensions/long-running</module>
-	<module>orbit</module>
+        <module>bpel-extensions/e4x</module>
+        <module>bpel-extensions/long-running</module>
+        <module>orbit</module>
     </modules>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <preparationGoals>clean install</preparationGoals>
+                        <autoVersionSubmodules>false</autoVersionSubmodules>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -226,47 +257,50 @@
 
                 </plugin>
 
-                <plugin>  
-  <groupId>org.bsc.maven</groupId>  
-  <artifactId>maven-processor-plugin</artifactId>  
-  <version>2.0.5</version>  
-  <executions>  
-    <execution>  
-      <id>process</id>  
-      <goals>  
-        <goal>process</goal>  
-      </goals>  
-      <phase>generate-sources</phase>  
-      <configuration>  
-        <processors>  
-          <processor>org.apache.openjpa.persistence.meta.AnnotationProcessor6</processor>  
-        </processors>  
-        <optionMap>  
-          <openjpa.metamodel>true</openjpa.metamodel>  
-        </optionMap>  
-      </configuration>  
-    </execution>  
-  </executions>  
-</plugin>  
-<plugin>  
-  <groupId>org.codehaus.mojo</groupId>  
-  <artifactId>build-helper-maven-plugin</artifactId>  
-  <version>1.7</version>  
-  <executions>  
-    <execution>  
-      <id>add-source</id>  
-      <phase>generate-sources</phase>  
-      <goals>  
-        <goal>add-source</goal>  
-      </goals>  
-      <configuration>  
-        <sources>  
-          <source>${project.build.directory}/generated-sources/apt</source>  
-        </sources>  
-      </configuration>  
-    </execution>  
-  </executions>  
-</plugin>
+                <plugin>
+                    <groupId>org.bsc.maven</groupId>
+                    <artifactId>maven-processor-plugin</artifactId>
+                    <version>2.0.5</version>
+                    <executions>
+                        <execution>
+                            <id>process</id>
+                            <goals>
+                                <goal>process</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <processors>
+                                    <processor>
+                                        org.apache.openjpa.persistence.meta.AnnotationProcessor6
+                                    </processor>
+                                </processors>
+                                <optionMap>
+                                    <openjpa.metamodel>true</openjpa.metamodel>
+                                </optionMap>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.7</version>
+                    <executions>
+                        <execution>
+                            <id>add-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>${project.build.directory}/generated-sources/apt
+                                    </source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -329,32 +363,32 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-	<plugins>
-	    <plugin> 
-		<groupId>org.jvnet.maven.incrementalbuild</groupId> 
-		<artifactId>incremental-build-plugin</artifactId>
-		<version>1.3</version>
-		<executions> 
-		    <execution> 
-		        <goals> 
-			    <goal>incremental-build</goal>
-			</goals>
-		    </execution> 
-		</executions> 
-	    </plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-source-plugin</artifactId>
-			<executions>
-				<execution>
-					<id>attach-sources</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-	</plugins>
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.maven.incrementalbuild</groupId>
+                <artifactId>incremental-build-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>incremental-build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 
@@ -571,7 +605,7 @@
             <dependency>
                 <groupId>rhino</groupId>
                 <artifactId>js</artifactId>
-		<version>1.7R1</version>
+                <version>1.7R1</version>
             </dependency>
             <!-- 3rd party libraries -->
             <dependency>
@@ -1051,11 +1085,11 @@
                 <!--version>1.1.117</version-->
                 <version>1.2.140</version>
             </dependency>
-	     <dependency>
-          	<groupId>com.hazelcast.wso2</groupId>
-          	<artifactId>hazelcast</artifactId>
-		<version>${orbit.version.hazelcast}</version>
-      	     </dependency>
+            <dependency>
+                <groupId>com.hazelcast.wso2</groupId>
+                <artifactId>hazelcast</artifactId>
+                <version>${orbit.version.hazelcast}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <profiles>
@@ -1145,7 +1179,7 @@ And then run this profile, those classes with @ChannelType will be regenerated. 
                 <!--module>axis2-war</module>
                 <module>bpel-itests</module-->
                 <module>distro</module>
-		<module>orbit</module>
+                <module>orbit</module>
             </modules>
         </profile>
     </profiles>
