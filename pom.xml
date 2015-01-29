@@ -24,7 +24,7 @@
     <groupId>org.wso2.bpel</groupId>
     <artifactId>ode</artifactId>
     <packaging>pom</packaging>
-    <version>1.3.5-wso2v12-SNAPSHOT</version>
+    <version>1.3.5-wso2v12</version>
 
     <name>ODE</name>
     <description>Apache ODE (Orchestration Director Engine) executes business processes written
@@ -56,7 +56,7 @@
         <url>https://github.com/wso2/wso2-ode.git</url>
         <developerConnection>scm:git:https://github.com/wso2/wso2-ode.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/wso2-ode.git</connection>
-        <tag>HEAD</tag>
+        <tag>ode-1.3.5-wso2v12</tag>
     </scm>
     <distributionManagement>
         <!--repository>
