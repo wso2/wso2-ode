@@ -134,7 +134,7 @@ public interface BpelDAOConnection {
     AttachmentDAO getAttachmentDAO(Long attachmentID, MessageExchangeDAO mex);
 
     /**
-     * Returns all failed activities per a page
+     * Returns all failed activities per page
      * @param  startNo  Starting page number
      * @param  pageSize  Number of failed activities per page
      * @return resultant failed activity list

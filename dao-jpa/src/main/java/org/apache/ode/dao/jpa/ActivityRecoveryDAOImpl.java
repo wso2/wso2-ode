@@ -144,7 +144,6 @@ public class ActivityRecoveryDAOImpl implements ActivityRecoveryDAO {
         return _retries;
     }
 
-    //add new getter method for instance ID. Modification done to getAllFailedActivities
     public Long getInstanceId() {
         return _instanceId;
     }

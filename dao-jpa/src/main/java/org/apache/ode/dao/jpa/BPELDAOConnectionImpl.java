@@ -636,9 +636,6 @@ public class BPELDAOConnectionImpl implements BpelDAOConnection, FilteredInstanc
         return dao;
     }
 
-
-
-    //Test method for get all failed activities
     public List<ActivityRecoveryDAO> getFailedActivities(int startNo, int pageSize) {
         List<ActivityRecoveryDAO> failedActivityList =
                 _em.createNamedQuery(ActivityRecoveryDAOImpl.SELECT_ALL_FAILED_ACTIVITIES).setFirstResult(startNo).setMaxResults(pageSize).getResultList();
@@ -646,8 +643,7 @@ public class BPELDAOConnectionImpl implements BpelDAOConnection, FilteredInstanc
         return failedActivityList;
     }
 
-   //new method to count failed,.
-   public Object getCountOfAllFailedActivities()
+    public Object getCountOfAllFailedActivities()
     {
        Object failedActivitycount=  _em.createNamedQuery(ActivityRecoveryDAOImpl.COUNT_All_ACTIVITY_RECOVERIES).getSingleResult();
        return failedActivitycount;
