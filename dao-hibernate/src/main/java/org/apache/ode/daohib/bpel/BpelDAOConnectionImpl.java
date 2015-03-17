@@ -404,6 +404,22 @@ public class BpelDAOConnectionImpl implements BpelDAOConnection, FilteredInstanc
         return csetDaos;
     }
 
+	public Collection<CorrelationSetDAO> getActiveCorrelationSets(String correlationName, String correlationKey,
+	                                                              QName processType) {
+		ArrayList<CorrelationSetDAO> csetDaos = new ArrayList<CorrelationSetDAO>();
+		String sql = " select c from CorrelationSetDAOImpl as c left join fetch c._scope " +
+		             " where c._scope._processInstance._state = (:state) " +
+		             " and c._name = (:name) " +
+		             " and c._correlationKey = (:key) " +
+		             " and c._scope._processInstance._process._processType = :processType ";
+		Collection<HCorrelationSet> csets =
+				getSession().createQuery(sql).setParameter("state", ProcessState.STATE_ACTIVE)
+				            .setParameter("name", correlationName).setParameter("key", correlationKey)
+				            .setParameter("processType", processType.toString()).list();
+		for (HCorrelationSet cset : csets)
+			csetDaos.add(new CorrelationSetDaoImpl(_sm, cset));
+		return csetDaos;
+	}
 
     public ProcessManagementDAO getProcessManagement() {
         return new ProcessManagementDaoImpl(_sm);

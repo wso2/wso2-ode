@@ -297,6 +297,7 @@ class PICK extends ACTIVITY {
                     initVariable(mexId, onMessage);
                     try {
                         VariableInstance vinst = _scopeFrame.resolve(onMessage.variable);
+	                    getBpelRuntimeContext().checkDuplicateCSets(_scopeFrame, onMessage, vinst, mexId);
                         for (OScope.CorrelationSet cset : onMessage.initCorrelations) {
                             initializeCorrelation(_scopeFrame.resolve(cset), vinst);
                         }

@@ -603,8 +603,20 @@ public class BPELDAOConnectionImpl implements BpelDAOConnection, FilteredInstanc
         return _em.createNamedQuery(CorrelationSetDAOImpl.SELECT_ACTIVE_SETS).setParameter("state", ProcessState.STATE_ACTIVE).getResultList();
     }
 
-    public int deleteInstances(InstanceFilter filter, Set<ProcessConf.CLEANUP_CATEGORY> categories) {
-        if(filter.getLimit() == 0){
+	public Collection<CorrelationSetDAO> getActiveCorrelationSets(String correlationName, String correlationKey,
+	                                                              QName processType) {
+		String sql = " select c from CorrelationSetDAOImpl as c left join fetch c._scope " +
+		             " where c._scope._processInstance._state = (:state) " +
+		             " and c._name = (:name) " +
+		             " and c._correlationKey = (:key) " +
+		             " and c._scope._processInstance._process._processType = :processType ";
+		return _em.createQuery(sql).setParameter("state", ProcessState.STATE_ACTIVE)
+		          .setParameter("name", correlationName).setParameter("key", correlationKey)
+		          .setParameter("processType", processType.toString()).getResultList();
+	}
+
+	public int deleteInstances(InstanceFilter filter, Set<ProcessConf.CLEANUP_CATEGORY> categories) {
+		if(filter.getLimit() == 0){
             return 0;
         }
 

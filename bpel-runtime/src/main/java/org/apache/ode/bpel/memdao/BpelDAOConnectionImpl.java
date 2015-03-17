@@ -386,8 +386,14 @@ class BpelDAOConnectionImpl implements BpelDAOConnection {
         throw new UnsupportedOperationException();
     }
 
-    public ProcessManagementDaoImpl getProcessManagement() {
-        return new ProcessManagementDaoImpl();
+	public Collection<CorrelationSetDAO> getActiveCorrelationSets(String correlationName, String correlationKey,
+	                                                              QName type) {
+		// Not supported in in-memory mode. Hence returning empty list.
+		return Collections.EMPTY_LIST;
+	}
+
+	public ProcessManagementDaoImpl getProcessManagement() {
+		return new ProcessManagementDaoImpl();
     }
 
     public AttachmentDAO getAttachmentDAO(Long attachmentID, MessageExchangeDAO mex) {

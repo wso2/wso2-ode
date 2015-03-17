@@ -564,6 +564,110 @@ public class BpelRuntimeContextImpl implements BpelRuntimeContext {
 
     }
 
+	/**
+	 * @param scopeFrame Scope Frame need to be checked
+	 * @param onMessage  On Message
+	 * @param vinst      Variable instance
+	 * @param mexId      Message exchange ID
+	 * @throws FaultException
+	 */
+	public void checkDuplicateCSets(ScopeFrame scopeFrame, OPickReceive.OnMessage onMessage, VariableInstance vinst,
+	                                String mexId) throws FaultException {
+
+		for (OScope.CorrelationSet cset : onMessage.initCorrelations) {
+			checkDuplicateCSetKey(scopeFrame.resolve(cset), vinst, mexId);
+		}
+
+		for (OScope.CorrelationSet cset : onMessage.joinCorrelations) {
+			// Ignore already initialized correlations sets in same process instance.
+			if (!isCorrelationInitialized(scopeFrame.resolve(cset))) {
+				checkDuplicateCSetKey(scopeFrame.resolve(cset), vinst, mexId);
+			}
+		}
+	}
+
+	/**
+	 * Check for Duplicate correlation key in database for same process type and process deployer.
+	 *
+	 * @param cset        the correlation set instance
+	 * @param variable  variable instance.
+	 * @param mexId message exchange ID.
+	 * @throws FaultException
+	 */
+	private void checkDuplicateCSetKey(CorrelationSetInstance cset, VariableInstance variable, String mexId)
+			throws FaultException {
+
+		// compute correlation key
+		String[] propNames = new String[cset.declaration.properties.size()];
+		String[] propValues = new String[cset.declaration.properties.size()];
+
+		for (int i = 0; i < cset.declaration.properties.size(); ++i) {
+			OProcess.OProperty property = cset.declaration.properties.get(i);
+			propValues[i] = readProperty(variable, property);
+			propNames[i] = property.name.toString();
+		}
+
+		CorrelationKey correlation = new CorrelationKey(cset.declaration.name, propValues);
+
+		// Get Active correlation set for given active process type.
+		Collection<CorrelationSetDAO> activeCorrelationSets = this._dao.getConnection()
+		                                                               .getActiveCorrelationSets(cset.declaration.name,
+		                                                                                         correlation
+				                                                                                         .toCanonicalString(),
+		                                                                                         this._bpelProcess
+				                                                                                         .getProcessType());
+		for (CorrelationSetDAO csetDao : activeCorrelationSets) {
+			// Check for BPEL deployer for tenant validation.
+			String csetProcessDeployer =
+					this._bpelProcess._engine.getProcess(csetDao.getProcess().getProcessId())._pconf.getDeployer();
+			if (this._bpelProcess._pconf.getDeployer().equals(csetProcessDeployer)) {
+
+				if (BpelProcess.__log.isDebugEnabled()) {
+					BpelProcess.__log.debug("Found duplicate initialized correlation set " + cset.declaration.name +
+					                        " for key " + csetDao.getValue() + " ,for BPEL Deployer " +
+					                        csetProcessDeployer);
+				}
+
+				String faultString = "Duplicate active correlation set found for " + this._bpelProcess.getProcessType();
+				FaultData faultData = new FaultData(_bpelProcess.getOProcess().constants.qnCorrelationViolation,
+				                                    cset.declaration.declaringScope, faultString);
+
+				// Set activity scope to fault.
+				_dao.getScope(cset.scopeInstance).setState(ScopeStateEnum.FAULT);
+				// Set Process fault.
+				_dao.setFault(faultData.getFaultName(), faultData.getExplanation(), faultData.getFaultLineNo(),
+				              faultData.getActivityId(), faultData.getFaultMessage());
+
+				// Fault Message exchange.
+				MessageExchangeDAO mexDao = _dao.getConnection().getMessageExchange(mexId);
+				if (mexDao != null) {
+					MyRoleMessageExchangeImpl mex =
+							new MyRoleMessageExchangeImpl(_bpelProcess, _bpelProcess._engine, mexDao);
+					_bpelProcess.initMyRoleMex(mex);
+
+					// Creaing fault messgae
+					Message message = mex.createMessage(faultData.getFaultName());
+					message.setMessage(faultData.getFaultMessage());
+					mex.setResponse(message);
+
+					mex.setFault(faultData.getFaultName(), message);
+					mex.setFaultExplanation(faultData.getExplanation());
+					_bpelProcess.doAsyncReply(mex, this);
+				}
+				// Fault Outstanding message Exchanges.
+				faultOutstandingMessageExchanges(faultData);
+
+				throw new FaultException(_bpelProcess.getOProcess().constants.qnCorrelationViolation, faultString);
+
+			} else {
+				if (BpelProcess.__log.isDebugEnabled()) {
+					BpelProcess.__log.debug("excluding already Initializing correlation set " + cset.declaration.name +
+					                        " for BPEL Deployer " + csetProcessDeployer);
+				}
+			}
+		}
+	}
+
     /**
      * Common functionality to initialize a correlation set based on data
      * available in a variable.
