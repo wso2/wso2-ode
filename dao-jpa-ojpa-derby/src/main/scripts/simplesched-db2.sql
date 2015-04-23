@@ -6,12 +6,11 @@
 DROP TABLE IF EXISTS ODE_JOB;
 
 CREATE TABLE ODE_JOB (
-  jobid char(64)  PRIMARY KEY DEFAULT '',
+  jobid char(64)  NOT NULL,
   ts bigint  NOT NULL DEFAULT 0,
   nodeid char(64)  NULL,
   scheduled INTEGER  NOT NULL DEFAULT 0,
   transacted INTEGER  NOT NULL DEFAULT 0,
-
   instanceId BIGINT,
   mexId varchar(254),
   processId varchar(254),
@@ -22,6 +21,7 @@ CREATE TABLE ODE_JOB (
   retryCount INTEGER,
   inMem INTEGER,
   detailsExt BLOB,
+  PRIMARY KEY (jobid)
 );
 
 CREATE INDEX IDX_ODE_JOB_TS on ODE_JOB(ts);
