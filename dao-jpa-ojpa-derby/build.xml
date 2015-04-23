@@ -52,6 +52,9 @@
 
         <!-- Postgres -->
         <create-ddl db="postgres"/>
+        <!-- DB2 -->
+        <create-ddl db="db2"/>
+
 
     </target>
 
