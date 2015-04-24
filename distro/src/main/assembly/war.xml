@@ -112,7 +112,7 @@
 
     <files>
         <file>
-            <source>${basedir}/../axis2-war/target/ode-axis2-war-${project.version}.war</source>
+            <source>${basedir}/../axis2-war/target/ode-axis2-war-${ode.version}.war</source>
             <outputDirectory>/</outputDirectory>
             <destName>ode.war</destName>
         </file>

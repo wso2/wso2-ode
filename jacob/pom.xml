@@ -69,7 +69,7 @@
 			   <dependency>
 			      <groupId>org.wso2.bpel</groupId>
 			      <artifactId>ode-jacob-ap</artifactId>
-			      <version>${project.version}</version>
+			      <version>${ode.version}</version>
 			   </dependency>
 			 </dependencies>
             </plugin-->

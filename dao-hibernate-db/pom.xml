@@ -118,7 +118,7 @@
             </goals>
             <configuration>
               <tasks>
-            <property name="ode.version" value="${project.version}" />
+            <property name="ode.version" value="${ode.version}" />
         <ant antfile="build.xml" target="zip-derby-db" />
               </tasks>
             </configuration>

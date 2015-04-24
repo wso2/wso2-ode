@@ -86,7 +86,7 @@
       <dependency>
           <groupId>com.hazelcast</groupId>
           <artifactId>hazelcast</artifactId>
-          <version>3.0.1</version>
+          <version>${orbit.version.hazelcast}</version>
       </dependency>
     </dependencies>
 

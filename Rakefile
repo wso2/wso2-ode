@@ -705,7 +705,7 @@ define "apache-ode" do
   end
 
   package(:zip, :id=>"#{id}-docs").include(doc.from(project("ode").projects).
-    using(:javadoc, :windowtitle=>"Apache ODE #{project.version}").target, :as=>"#{id}-docs-#{version}") unless ENV["JAVADOC"] =~ /^(no|off|false|skip)$/i
+    using(:javadoc, :windowtitle=>"Apache ODE #{ode.version}").target, :as=>"#{id}-docs-#{version}") unless ENV["JAVADOC"] =~ /^(no|off|false|skip)$/i
     
   # sign packages
   gpg_sign_before_upload

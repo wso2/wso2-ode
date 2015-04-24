@@ -43,7 +43,7 @@
     <dependency>
       <groupId>org.wso2.bpel</groupId>
       <artifactId>ode-bpel-epr</artifactId>
-      <version>${project.version}</version>
+      <version>${ode.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
