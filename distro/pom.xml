@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.wso2.bpel</groupId>
         <artifactId>ode</artifactId>
-        <version>1.3.5-wso2v12-SNAPSHOT</version>
+        <version>1.3.5-wso2v13-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -92,7 +92,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>apache-ode-war-${project.version}</finalName>
+              <finalName>apache-ode-war-${ode.version}</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <descriptors>
                 <descriptor>src/main/assembly/war.xml</descriptor>
@@ -107,7 +107,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>apache-ode-jbi-${project.version}</finalName>
+              <finalName>apache-ode-jbi-${ode.version}</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <descriptors>
                 <descriptor>src/main/assembly/jbi.xml</descriptor>

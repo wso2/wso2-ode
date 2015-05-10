@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.wso2.bpel</groupId>
         <artifactId>ode</artifactId>
-        <version>1.3.5-wso2v12-SNAPSHOT</version>
+        <version>1.3.5-wso2v13-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -63,7 +63,7 @@
                 <scanIntervalSeconds>10</scanIntervalSeconds>
                 <stopKey>foo</stopKey>
                 <stopPort>9999</stopPort>
-                <webApp>${basedir}/../axis2-war/target/ode-axis2-war-${project.version}.war</webApp>
+                <webApp>${basedir}/../axis2-war/target/ode-axis2-war-${ode.version}.war</webApp>
         </configuration>
         <executions>
                 <execution>

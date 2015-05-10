@@ -24,7 +24,7 @@
     <groupId>org.wso2.bpel</groupId>
     <artifactId>ode</artifactId>
     <packaging>pom</packaging>
-    <version>1.3.5-wso2v13-SNAPSHOT</version>
+    <version>1.3.5-wso2v14-SNAPSHOT</version>
 
     <name>ODE</name>
     <description>Apache ODE (Orchestration Director Engine) executes business processes written
@@ -47,34 +47,12 @@
         <url>https://issues.apache.org/jira/browse/ODE</url>
     </issueManagement>
 
-    <!--<scm>-->
-    <!--<connection>scm:svn:http://svn.apache.org/repos/asf/ode/</connection>-->
-    <!--<developerConnection>scm:svn:https://svn.apache.org/repos/asf/ode/</developerConnection>-->
-    <!--<url>http://svn.apache.org/repos/asf/ode/</url>-->
-    <!--</scm>-->
     <scm>
         <url>https://github.com/wso2/wso2-ode.git</url>
         <developerConnection>scm:git:https://github.com/wso2/wso2-ode.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/wso2-ode.git</connection>
         <tag>HEAD</tag>
     </scm>
-    <distributionManagement>
-        <!--repository>
-            <id>wso2.releases</id>
-            <name>WSO2 internal Repository</name>
-            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
-        </repository-->
-        <repository>
-            <id>nexus­releases</id>
-            <name>WSO2 Release Distribution Repository</name>
-            <url>http://maven.wso2.org/nexus/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>wso2.snapshots</id>
-            <name>WSO2 Snapshot Repository</name>
-            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <mailingLists>
         <mailingList>
@@ -97,31 +75,20 @@
         </mailingList>
     </mailingLists>
 
-    <!--prerequisites>
-        <maven>2.2.1</maven>
-    </prerequisites-->
-
     <properties>
-        <!--
-        NOTE: Project version, to be used instead of ${pom.version} since that
-              value magically changes when using SNAPSHOT versions.
 
-              This value *must* be kept in sync with the value of the <version>
-              element, and it will need to be changed manually before a release,
-              as the maven-release-plugin will not update this value.
-        -->
-        <ode.version>1.3.5-wso2v13-SNAPSHOT</ode.version>
+        <ode.version>1.3.5-wso2v14-SNAPSHOT</ode.version>
 
         <activation.version>1.1</activation.version>
         <annogen.version>0.1.0</annogen.version>
         <antlr.version>2.7.7</antlr.version>
-        <axiom.version>1.2.11-wso2v5</axiom.version>
-        <exp.pkg.version.axiom>1.2.11.wso2v5</exp.pkg.version.axiom>
-        <imp.pkg.version.axiom>[1.2.11.wso2v5, 1.3.0)</imp.pkg.version.axiom>
-        <axis2.version>1.6.1-wso2v11</axis2.version>
-        <exp.pkg.version.axis2>1.6.1.wso2v11</exp.pkg.version.axis2>
+        <axiom.version>1.2.11-wso2v6</axiom.version>
+        <exp.pkg.version.axiom>1.2.11.wso2v6</exp.pkg.version.axiom>
+        <imp.pkg.version.axiom>[1.2.11.wso2v6, 1.3.0)</imp.pkg.version.axiom>
+        <axis2.version>1.6.1-wso2v12</axis2.version>
+        <exp.pkg.version.axis2>1.6.1.wso2v12</exp.pkg.version.axis2>
         <imp.pkg.version.axis2>[1.6.1.wso2v11, 1.7.0)</imp.pkg.version.axis2>
-        <rampart.version>1.6.1-wso2v9</rampart.version>
+        <rampart.version>1.6.1-wso2v14</rampart.version>
         <commons.codec.version>1.3</commons.codec.version>
         <backport.concurrent.version>3.1</backport.concurrent.version>
         <commons.fileupload.version>1.2</commons.fileupload.version>
@@ -129,7 +96,7 @@
         <commons.httpclient.version>3.1</commons.httpclient.version>
         <commons.io.version>1.4</commons.io.version>
         <commons.lang.version>2.4</commons.lang.version>
-        <commons.logging.version>1.1</commons.logging.version>
+        <commons.logging.version>1.2</commons.logging.version>
         <commons.pool.version>1.4</commons.pool.version>
         <commons.primitives.version>1.0</commons.primitives.version>
         <commons.dbcp.version>1.2.1</commons.dbcp.version>
@@ -142,7 +109,7 @@
         <neethi.version>2.0.4</neethi.version>
         <woden.version>1.0M8</woden.version>
         <wsdl4j.version>1.6.2</wsdl4j.version>
-        <woodstox.version>3.2.4</woodstox.version>
+        <woodstox.version>4.2.0</woodstox.version>
         <javax.mail.version>1.4</javax.mail.version>
         <hibernate.version>3.2.5.ga</hibernate.version>
         <spring.version>2.5.6</spring.version>
@@ -153,14 +120,14 @@
         <geronimo.javamail.version>1.2</geronimo.javamail.version>
         <geronimo.stax-api.version>1.0.1</geronimo.stax-api.version>
         <geronimo.specs.jta.version>1.1</geronimo.specs.jta.version>
-        <!--geronimo.specs.ejb.version>1.1</geronimo.specs.ejb.version-->
-        <jetty.version>6.1.12rc1</jetty.version>
+        <geronimo.specs.ejb.version>1.1</geronimo.specs.ejb.version>
+        <jetty.version>6.1.5</jetty.version>
         <jencks.version>2.1</jencks.version>
         <jasper.version>4.2.20RC0</jasper.version>
-        <log4j.version>1.2.15</log4j.version>
+        <log4j.version>1.2.17</log4j.version>
         <saxon.version>9.4</saxon.version>
         <servicemix.version>3.3</servicemix.version>
-        <slf4j.version>1.4.3</slf4j.version>
+        <slf4j.version>1.5.10</slf4j.version>
         <stax-api.version>1.0</stax-api.version>
         <xerces.version>2.9.0</xerces.version>
         <xmlresolver.version>1.2</xmlresolver.version>
@@ -180,9 +147,25 @@
         <activemq.version>4.1.1</activemq.version>
         <xml-apis.version>1.3.04</xml-apis.version>
         <servicemix.nmr.version>1.1.0</servicemix.nmr.version>
-        <axis2.transport.version>1.1.0-wso2v10</axis2.transport.version>
+        <axis2.transport.version>1.1.0-wso2v12</axis2.transport.version>
         <rhino.version>1.7R1</rhino.version>
-        <orbit.version.hazelcast>3.2.6.wso2v3</orbit.version.hazelcast>
+        <orbit.version.hazelcast.wso2>3.2.6.wso2v3</orbit.version.hazelcast.wso2>
+        <orbit.version.hazelcast>3.0.1</orbit.version.hazelcast>
+        <commons-beanutils.version>1.8.3</commons-beanutils.version>
+        <version.h2.engine>1.2.140</version.h2.engine>
+        <tranql.version>1.1</tranql.version>
+        <xjavadoc.version>1.1-j5</xjavadoc.version>
+        <jbi.version>1.1.0</jbi.version>
+
+        <maven.incremental.plugin.version>1.3</maven.incremental.plugin.version>
+        <maven.assembly.plugin.version>2.4</maven.assembly.plugin.version>
+        <maven.build.helper.plugin.version>1.7</maven.build.helper.plugin.version>
+        <maven.processor.plugin.version>2.0.5</maven.processor.plugin.version>
+        <maven.surefire.plugin.version>2.4.3</maven.surefire.plugin.version>
+        <maven.bundle.plugin.version>1.4.0</maven.bundle.plugin.version>
+        <sql.maven.plugin.version>1.2</sql.maven.plugin.version>
+        <maven.javadoc.plugin.version>2.5</maven.javadoc.plugin.version>
+        <xdoclet.maven.plugin.version>1.0</xdoclet.maven.plugin.version>
 
 	<project.scm.id>wso2-scm-server</project.scm.id>
     </properties>
@@ -243,13 +226,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.2-beta-5</version>
+                    <version>${maven.assembly.plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.0.2</version>
                     <configuration>
                         <source>1.5</source>
                         <target>1.6</target>
@@ -260,7 +242,7 @@
                 <plugin>
                     <groupId>org.bsc.maven</groupId>
                     <artifactId>maven-processor-plugin</artifactId>
-                    <version>2.0.5</version>
+                    <version>${maven.processor.plugin.version}</version>
                     <executions>
                         <execution>
                             <id>process</id>
@@ -284,7 +266,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.7</version>
+                    <version>${maven.build.helper.plugin.version}</version>
                     <executions>
                         <execution>
                             <id>add-source</id>
@@ -305,7 +287,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.4.3</version>
+                    <version>${maven.surefire.plugin.version}</version>
                 </plugin>
 
 
@@ -317,12 +299,12 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>xdoclet-maven-plugin</artifactId>
-                    <version>1.0</version>
+                    <version>${xdoclet.maven.plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>xdoclet</groupId>
                             <artifactId>xjavadoc</artifactId>
-                            <version>1.1-j5</version>
+                            <version>${xjavadoc.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -336,7 +318,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>sql-maven-plugin</artifactId>
-                    <version>1.2</version>
+                    <version>${sql.maven.plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.derby</groupId>
@@ -355,7 +337,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.5</version>
+                    <version>${maven.javadoc.plugin.version}</version>
                     <configuration>
                         <minmemory>128m</minmemory>
                         <maxmemory>512m</maxmemory>
@@ -367,7 +349,7 @@
             <plugin>
                 <groupId>org.jvnet.maven.incrementalbuild</groupId>
                 <artifactId>incremental-build-plugin</artifactId>
-                <version>1.3</version>
+                <version>${maven.incremental.plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -605,7 +587,7 @@
             <dependency>
                 <groupId>rhino</groupId>
                 <artifactId>js</artifactId>
-                <version>1.7R1</version>
+                <version>${rhino.version}</version>
             </dependency>
             <!-- 3rd party libraries -->
             <dependency>
@@ -1077,18 +1059,22 @@
             <dependency>
                 <groupId>tranql</groupId>
                 <artifactId>tranql-connector</artifactId>
-                <version>1.1</version>
+                <version>${tranql.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <!--version>1.1.117</version-->
-                <version>1.2.140</version>
+                <version>${version.h2.engine}</version>
             </dependency>
             <dependency>
                 <groupId>com.hazelcast.wso2</groupId>
                 <artifactId>hazelcast</artifactId>
-                <version>${orbit.version.hazelcast}</version>
+                <version>${orbit.version.hazelcast.wso2}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
