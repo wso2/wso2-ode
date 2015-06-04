@@ -130,6 +130,9 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
     private long _immediateTransactionRetryInterval = 1000;
 
     private static boolean useStaticNodeId=false;
+
+    private ODECluster cluster;
+
     static {
         if(System.getProperty("BpsStaticNodeId") != null){
             String idProperty = System.getProperty("BpsStaticNodeId");
@@ -215,6 +218,10 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
 
     public void setPolledRunnableProcesser(JobProcessor polledRunnableProcessor) {
         _polledRunnableProcessor = polledRunnableProcessor;
+    }
+
+    public void setCluster(ODECluster cluster) {
+        this.cluster = cluster;
     }
 
     public void cancelJob(String jobId) throws ContextException {
@@ -466,7 +473,9 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
 
         _knownNodes.clear();
 
-        if(!useStaticNodeId) {
+        // Get known nodes from database. So we won't miss previous jobs from old nodes.
+
+        //if(!useStaticNodeId) {    // No need.
             try {
                 execTransaction(new Callable<Void>() {
 
@@ -480,6 +489,12 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
                 __log.error("Error retrieving node list.", ex);
                 throw new ContextException("Error retrieving node list.", ex);
             }
+        //}
+
+        // Get all nodes from cluster.
+        if (cluster != null && cluster.isClusterEnabled()) {
+            List<String> knownNodesInCluster = cluster.getKnownNodes();
+            _knownNodes.addAll(knownNodesInCluster);
         }
         long now = System.currentTimeMillis();
 
@@ -490,8 +505,8 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         _todo.enqueue(new LoadImmediateTask(now));
 
         // schedule check for stale nodes, make it random so that the nodes don't overlap.
-        if(!useStaticNodeId)
-            _todo.enqueue(new CheckStaleNodes(now + randomMean(_staleInterval)));
+        //if(!useStaticNodeId)
+         _todo.enqueue(new CheckStaleNodes(now + randomMean(_staleInterval)));
 
         // do the upgrade sometime (random) in the immediate interval.
         _todo.enqueue(new UpgradeJobsTask(now + randomMean(_immediateInterval)));
@@ -731,6 +746,8 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         }
     }
 
+    // Deprecating this method since no one using this.
+    @Deprecated
     public void updateHeartBeat(String nodeId) {
         if (nodeId == null)
             return;
@@ -740,6 +757,63 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
 
         _lastHeartBeat.put(nodeId, System.currentTimeMillis());
         _knownNodes.add(nodeId);
+    }
+
+    /**
+     * Update HeartBeat for all nodes in the cluster. Then check for stale nodes and returns list of stale nodes.
+     *
+     * @return stale node ID as a list.
+     */
+    private List<String> updateHeartBeatAndGetStaleNodes() {
+        __log.info("Get Staled nodes started.");  // TODO make this as a debug log
+        List<String> staleNodes = new ArrayList<String>();
+        if (cluster != null) {
+            if (cluster.isClusterEnabled()) {
+
+                final Long currentHeartbeat = System.currentTimeMillis();
+                List<String> knownNodesInCluster = cluster.getKnownNodes();
+
+                if (knownNodesInCluster != null) {
+                    //Updating heartbeat for all known nodes.
+                    for (String knownNodeID : knownNodesInCluster) {
+                        if (knownNodeID != null) {
+                            if (_lastHeartBeat.containsKey(knownNodeID)) {
+                                __log.info("Updated heartbeat for node " + knownNodeID + " -> " + currentHeartbeat); // TODO make this as a debug log
+                                _lastHeartBeat.put(knownNodeID, currentHeartbeat);
+                            } else {
+                                __log.info("New heartbeat detected and updated for node " + knownNodeID + " -> " + currentHeartbeat);  // TODO make this as a debug log
+                                _lastHeartBeat.put(knownNodeID, currentHeartbeat);
+                                _knownNodes.add(knownNodeID);
+                            }
+                        }
+                    }
+                    // Checking for stale nodes.
+                    for (String nodeID : _lastHeartBeat.keySet()) {
+                        if (_lastHeartBeat.get(nodeID) != currentHeartbeat) {
+                            __log.info("Node " + nodeID + " is seems to be stale, last heartbeat detected before" +
+                                    (currentHeartbeat - _lastHeartBeat.get(nodeID)) + "ms.");  // TODO make this as a debug log
+                            // We are not removing this nodeID from _knownNodes and _lastHeartBeat,
+                            // We do it later in the recoverStaleNode.
+
+                            // Leader immediately marks nodeID as a stale node. But others will wait
+                            // for double stale interval before marking this nodeID as stale.
+                            // This is to handle situation like leader also become stale before
+                            // recovering old stale node jobs. In this situation new leader will
+                            // recover both stale nodes. ( old leader and stale node)
+                            if (cluster.isLeader()) {
+                                staleNodes.add(nodeID);
+                            } else if ((currentHeartbeat - _lastHeartBeat.get(nodeID)) >= _staleInterval * 2) {
+                                __log.info("Marking Node " + nodeID
+                                        + " as stale, since heartbeat is exceeding double stale interval");  // TODO make this as a debug log
+                                staleNodes.add(nodeID);
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        return staleNodes;
     }
 
     boolean doLoadImmediate() {
@@ -817,16 +891,22 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
     }
 
     boolean doUpgrade() {
-        __log.debug("UPGRADE started");
-
+        __log.info("UPGRADE started");  // TODO make this as a debug log
         final ArrayList<String> knownNodes;
-        if(!useStaticNodeId) {
-            knownNodes = new ArrayList<String>(_knownNodes);
-        }else {
+        if (cluster != null && cluster.isClusterEnabled()) {
+            if (!cluster.isLeader()) {
+                __log.info("Ignored doUpgrade, Since this node (" + _nodeId + ") is not the leader."); // TODO make this as a debug log
+                return true;
+            } else {
+                // Leader
+                knownNodes = new ArrayList<String>(_knownNodes);
+            }
+        } else {
+            // In case of single independent nodes sharing database, forget other nodes.
             knownNodes = new ArrayList<String>();
+            // Don't forget about self.
+            knownNodes.add(_nodeId);
         }
-        // Don't forget about self.
-        knownNodes.add(_nodeId);
         Collections.sort(knownNodes);
 
         // We're going to try to upgrade near future jobs using the db only.
@@ -863,29 +943,43 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
      * @param nodeId
      */
     void recoverStaleNode(final String nodeId) {
-        __log.debug("recovering stale node " + nodeId);
-        try {
-            int numrows = execTransaction(new Callable<Integer>() {
-                public Integer call() throws Exception {
-                    return _db.updateReassign(nodeId, _nodeId);
+        __log.info("recovering stale node " + nodeId); // TODO make this as a debug log
+        if (cluster != null && cluster.isClusterEnabled()) {
+            if (!cluster.isLeader()) {
+                __log.info("Ignored recoverStaleNode, Since this node (" + _nodeId + ") is not the leader.");
+                // We can now forget about this node, since leader should have recovered its jobs by now,
+                // if we see it again, it will be "new to us"
+                _knownNodes.remove(nodeId);
+                _lastHeartBeat.remove(nodeId);
+                return;
+            } else {
+                // Leader recovering stale nodes.
+                __log.info("recovering stale node " + nodeId + " Started");
+                try {
+                    int numrows = execTransaction(new Callable<Integer>() {
+                        public Integer call() throws Exception {
+                            return _db.updateReassign(nodeId, _nodeId);
+                        }
+                    });
+
+                    __log.debug("reassigned " + numrows + " jobs to self. ");
+
+                    // We can now forget about this node, if we see it again, it will be
+                    // "new to us"
+                    _knownNodes.remove(nodeId);
+                    _lastHeartBeat.remove(nodeId);
+
+                    // Force a load-immediate to catch anything new from the recovered node.
+                    doLoadImmediate();
+
+                } catch (Exception ex) {
+                    __log.error("Database error reassigning node.", ex);
+                } finally {
+                    __log.debug("node recovery complete");
                 }
-            });
-
-            __log.debug("reassigned " + numrows + " jobs to self. ");
-
-            // We can now forget about this node, if we see it again, it will be
-            // "new to us"
-            _knownNodes.remove(nodeId);
-            _lastHeartBeat.remove(nodeId);
-
-            // Force a load-immediate to catch anything new from the recovered node.
-            doLoadImmediate();
-
-        } catch (Exception ex) {
-            __log.error("Database error reassigning node.", ex);
-        } finally {
-            __log.debug("node recovery complete");
+            }
         }
+
     }
 
 //    private long doRetry(Job job) throws DatabaseException {
@@ -968,14 +1062,19 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         public void run() {
             _todo.enqueue(new CheckStaleNodes(System.currentTimeMillis() + _staleInterval));
             __log.debug("CHECK STALE NODES started");
-            for (String nodeId : _knownNodes) {
-                Long lastSeen = _lastHeartBeat.get(nodeId);
-                if ((lastSeen == null || (System.currentTimeMillis() - lastSeen) > _staleInterval)
-                    && !_nodeId.equals(nodeId))
-                {
-                    recoverStaleNode(nodeId);
-                }
+            List<String> staleNodes = updateHeartBeatAndGetStaleNodes();
+            for (String nodeId : staleNodes) {
+                recoverStaleNode(nodeId);
             }
+            // OLD ODE logic.
+//            for (String nodeId : _knownNodes) {
+//                Long lastSeen = _lastHeartBeat.get(nodeId);
+//                if ((lastSeen == null || (System.currentTimeMillis() - lastSeen) > _staleInterval)
+//                    && !_nodeId.equals(nodeId))
+//                {
+//                    recoverStaleNode(nodeId);
+//                }
+//            }
         }
     }
 

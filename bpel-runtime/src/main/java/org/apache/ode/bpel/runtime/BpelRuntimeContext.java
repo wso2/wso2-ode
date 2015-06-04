@@ -31,6 +31,7 @@ import org.apache.ode.bpel.evt.ProcessInstanceEvent;
 import org.apache.ode.bpel.evt.ScopeEvent;
 import org.apache.ode.bpel.iapi.MessageExchange;
 import org.apache.ode.bpel.o.OPartnerLink;
+import org.apache.ode.bpel.o.OPickReceive;
 import org.apache.ode.bpel.o.OProcess;
 import org.apache.ode.bpel.o.OScope;
 import org.apache.ode.bpel.o.OMessageVarType;
@@ -172,6 +173,9 @@ public interface BpelRuntimeContext {
     CorrelationKey readCorrelation(CorrelationSetInstance cset);
 
     void writeCorrelation(CorrelationSetInstance cset, CorrelationKey correlation);
+
+	void checkDuplicateCSets(ScopeFrame scopeFrame, OPickReceive.OnMessage onMessage, VariableInstance vinst,
+	                         String mexID) throws FaultException;
 
     void forceFlush();
     /**

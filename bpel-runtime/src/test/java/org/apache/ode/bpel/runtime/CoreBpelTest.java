@@ -42,6 +42,7 @@ import org.apache.ode.bpel.o.OFaultHandler;
 import org.apache.ode.bpel.o.OFlow;
 import org.apache.ode.bpel.o.OMessageVarType;
 import org.apache.ode.bpel.o.OPartnerLink;
+import org.apache.ode.bpel.o.OPickReceive;
 import org.apache.ode.bpel.o.OProcess;
 import org.apache.ode.bpel.o.OScope;
 import org.apache.ode.bpel.o.OSequence;
@@ -136,6 +137,10 @@ public class CoreBpelTest extends TestCase implements BpelRuntimeContext {
 
     public void writeCorrelation(CorrelationSetInstance cset, CorrelationKey correlation) {
     }
+
+	public void checkDuplicateCSets(ScopeFrame scopeFrame, OPickReceive.OnMessage onMessage, VariableInstance vinst,
+	                                String mexId) throws FaultException {
+	}
 
     public void cancel(TimerResponseChannel timerResponseChannel) {
     }
