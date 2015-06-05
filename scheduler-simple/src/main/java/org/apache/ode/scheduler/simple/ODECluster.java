@@ -20,7 +20,11 @@ package org.apache.ode.scheduler.simple;
 import java.util.List;
 
 public interface ODECluster {
-    //TODO: Add comments
+    /*
+    Provides clustering related operations
+    This will be implemented by BPEL server.
+    Added to fix BPS-675
+     */
     public boolean isClusterEnabled();
 
     public List<String> getKnownNodes();

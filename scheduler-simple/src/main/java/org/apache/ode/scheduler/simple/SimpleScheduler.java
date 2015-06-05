@@ -130,7 +130,7 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
     private long _immediateTransactionRetryInterval = 1000;
 
     private static boolean useStaticNodeId=false;
-
+    /** Variable cluster in related to New ODE clustering implementation-BPS-675 **/
     private ODECluster cluster;
 
     static {
@@ -219,7 +219,7 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
     public void setPolledRunnableProcesser(JobProcessor polledRunnableProcessor) {
         _polledRunnableProcessor = polledRunnableProcessor;
     }
-
+    /** Related to New ODE clustering implementation-BPS-675 **/
     public void setCluster(ODECluster cluster) {
         this.cluster = cluster;
     }
@@ -515,6 +515,77 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         _running = true;
     }
 
+    /**
+     *
+    start method of old ode clustering implementation BPS-675
+
+    public synchronized void start() {
+        if (_running)
+            return;
+
+        if (Boolean.parseBoolean(System.getProperty("org.apache.ode.scheduler.deleteJobsOnStart", "false"))) {
+            __log.debug("DeleteJobsOnStart");
+            try {
+                execTransaction(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        _db.deleteAllJobs();
+                        return null;
+                    }
+                });
+            } catch (Exception ex) {
+                __log.error("", ex);
+                throw new ContextException("", ex);
+            }
+        } else {
+            __log.debug("no DeleteJobsOnStart");
+        }
+
+        if (_exec == null)
+            _exec = Executors.newCachedThreadPool();
+
+        _todo.clearTasks(UpgradeJobsTask.class);
+        _todo.clearTasks(LoadImmediateTask.class);
+        _todo.clearTasks(CheckStaleNodes.class);
+        _processedSinceLastLoadTask.clear();
+        _outstandingJobs.clear();
+
+        _knownNodes.clear();
+
+        if(!useStaticNodeId) {
+            try {
+                execTransaction(new Callable<Void>() {
+
+                    public Void call() throws Exception {
+                        _knownNodes.addAll(_db.getNodeIds());
+                        return null;
+                    }
+
+                });
+            } catch (Exception ex) {
+                __log.error("Error retrieving node list.", ex);
+                throw new ContextException("Error retrieving node list.", ex);
+            }
+        }
+        long now = System.currentTimeMillis();
+
+        // Pretend we got a heartbeat...
+        for (String s : _knownNodes) _lastHeartBeat.put(s, now);
+
+        // schedule immediate job loading for now!
+        _todo.enqueue(new LoadImmediateTask(now));
+
+        // schedule check for stale nodes, make it random so that the nodes don't overlap.
+        if(!useStaticNodeId)
+            _todo.enqueue(new CheckStaleNodes(now + randomMean(_staleInterval)));
+
+        // do the upgrade sometime (random) in the immediate interval.
+        _todo.enqueue(new UpgradeJobsTask(now + randomMean(_immediateInterval)));
+
+        _todo.start();
+        _running = true;
+    }
+    **/
+
     private long randomMean(long mean) {
         return (long) _random.nextDouble() * mean + (mean/2);
     }
@@ -763,6 +834,7 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
      * Update HeartBeat for all nodes in the cluster. Then check for stale nodes and returns list of stale nodes.
      *
      * @return stale node ID as a list.
+     * Added to fix BPS-675
      */
     private List<String> updateHeartBeatAndGetStaleNodes() {
         __log.info("Get Staled nodes started.");  // TODO make this as a debug log
@@ -889,7 +961,7 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
             if (__log.isDebugEnabled()) __log.debug("Job "+job.jobId+" is being processed (processed since last load)");
         }
     }
-
+    /** Method doUpgrade() is related to New ODE clustering implementation BPS-675 **/
     boolean doUpgrade() {
         __log.info("UPGRADE started");  // TODO make this as a debug log
         final ArrayList<String> knownNodes;
@@ -937,10 +1009,54 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         }
 
     }
+    /**
+     *  doUpgrade method of old ode clustering implementation BPS-675
+    boolean doUpgrade() {
+        __log.debug("UPGRADE started");
 
+        final ArrayList<String> knownNodes;
+        if(!useStaticNodeId) {
+            knownNodes = new ArrayList<String>(_knownNodes);
+        }else {
+            knownNodes = new ArrayList<String>();
+        }
+        // Don't forget about self.
+        knownNodes.add(_nodeId);
+        Collections.sort(knownNodes);
+
+        // We're going to try to upgrade near future jobs using the db only.
+        // We assume that the distribution of the trailing digits in the
+        // scheduled time are uniformly distributed, and use modular division
+        // of the time by the number of nodes to create the node assignment.
+        // This can be done in a single update statement.
+        final long maxtime = System.currentTimeMillis() + _nearFutureInterval;
+        try {
+            return execTransaction(new Callable<Boolean>() {
+
+                public Boolean call() throws Exception {
+                    int numNodes = knownNodes.size();
+                    for (int i = 0; i < numNodes; ++i) {
+                        String node = knownNodes.get(i);
+                        _db.updateAssignToNode(node, i, numNodes, maxtime);
+                    }
+                    return true;
+                }
+
+            });
+
+        } catch (Exception ex) {
+            __log.error("Database error upgrading jobs.", ex);
+            return false;
+        } finally {
+            __log.debug("UPGRADE complete");
+        }
+
+    }
+**/
     /**
      * Re-assign stale node's jobs to self.
      * @param nodeId
+     * Related to BPS-675
      */
     void recoverStaleNode(final String nodeId) {
         __log.info("recovering stale node " + nodeId); // TODO make this as a debug log
@@ -981,6 +1097,34 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         }
 
     }
+/**
+ * recoverStaleNode method of old ode clustering implementation BPS-675
+    void recoverStaleNode(final String nodeId) {
+        __log.debug("recovering stale node " + nodeId);
+        try {
+            int numrows = execTransaction(new Callable<Integer>() {
+                public Integer call() throws Exception {
+                    return _db.updateReassign(nodeId, _nodeId);
+                }
+            });
+
+            __log.debug("reassigned " + numrows + " jobs to self. ");
+
+            // We can now forget about this node, if we see it again, it will be
+            // "new to us"
+            _knownNodes.remove(nodeId);
+            _lastHeartBeat.remove(nodeId);
+
+            // Force a load-immediate to catch anything new from the recovered node.
+            doLoadImmediate();
+
+        } catch (Exception ex) {
+            __log.error("Database error reassigning node.", ex);
+        } finally {
+            __log.debug("node recovery complete");
+        }
+    }
+    **/
 
 //    private long doRetry(Job job) throws DatabaseException {
 //        int retry = job.detail.getRetryCount() + 1;
@@ -1066,17 +1210,24 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
             for (String nodeId : staleNodes) {
                 recoverStaleNode(nodeId);
             }
-            // OLD ODE logic.
-//            for (String nodeId : _knownNodes) {
-//                Long lastSeen = _lastHeartBeat.get(nodeId);
-//                if ((lastSeen == null || (System.currentTimeMillis() - lastSeen) > _staleInterval)
-//                    && !_nodeId.equals(nodeId))
-//                {
-//                    recoverStaleNode(nodeId);
-//                }
-//            }
         }
     }
+
+/**
+ * run method of old ode clustering implementation BPS-675
+    public void run() {
+        _todo.enqueue(new CheckStaleNodes(System.currentTimeMillis() + _staleInterval));
+        __log.debug("CHECK STALE NODES started");
+        for (String nodeId : _knownNodes) {
+            Long lastSeen = _lastHeartBeat.get(nodeId);
+            if ((lastSeen == null || (System.currentTimeMillis() - lastSeen) > _staleInterval)
+                && !_nodeId.equals(nodeId))
+            {
+                recoverStaleNode(nodeId);
+            }
+        }
+    }
+ **/
 
     public void acquireTransactionLocks() {
         _db.acquireTransactionLocks();
