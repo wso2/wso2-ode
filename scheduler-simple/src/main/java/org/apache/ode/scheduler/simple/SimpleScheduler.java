@@ -837,7 +837,9 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
      * Added to fix BPS-675
      */
     private List<String> updateHeartBeatAndGetStaleNodes() {
-        __log.info("Get Staled nodes started.");  // TODO make this as a debug log
+        if (__log.isDebugEnabled()) {
+            __log.debug("Get Staled nodes started.");
+        }
         List<String> staleNodes = new ArrayList<String>();
         if (cluster != null) {
             if (cluster.isClusterEnabled()) {
@@ -850,10 +852,15 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
                     for (String knownNodeID : knownNodesInCluster) {
                         if (knownNodeID != null) {
                             if (_lastHeartBeat.containsKey(knownNodeID)) {
-                                __log.info("Updated heartbeat for node " + knownNodeID + " -> " + currentHeartbeat); // TODO make this as a debug log
+                                if (__log.isDebugEnabled()) {
+                                    __log.debug("Updated heartbeat for node " + knownNodeID + " -> " + currentHeartbeat);
+                                }
                                 _lastHeartBeat.put(knownNodeID, currentHeartbeat);
                             } else {
-                                __log.info("New heartbeat detected and updated for node " + knownNodeID + " -> " + currentHeartbeat);  // TODO make this as a debug log
+                                if (__log.isDebugEnabled()) {
+                                    __log.debug("New heartbeat detected and updated for node " + knownNodeID + " -> "
+                                                + currentHeartbeat);
+                                }
                                 _lastHeartBeat.put(knownNodeID, currentHeartbeat);
                                 _knownNodes.add(knownNodeID);
                             }
@@ -862,8 +869,10 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
                     // Checking for stale nodes.
                     for (String nodeID : _lastHeartBeat.keySet()) {
                         if (_lastHeartBeat.get(nodeID) != currentHeartbeat) {
-                            __log.info("Node " + nodeID + " is seems to be stale, last heartbeat detected before" +
-                                    (currentHeartbeat - _lastHeartBeat.get(nodeID)) + "ms.");  // TODO make this as a debug log
+                            if (__log.isDebugEnabled()) {
+                                __log.debug("Node " + nodeID + " is seems to be stale, last heartbeat detected before" +
+                                            (currentHeartbeat - _lastHeartBeat.get(nodeID)) + "ms.");
+                            }
                             // We are not removing this nodeID from _knownNodes and _lastHeartBeat,
                             // We do it later in the recoverStaleNode.
 
@@ -875,8 +884,10 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
                             if (cluster.isLeader()) {
                                 staleNodes.add(nodeID);
                             } else if ((currentHeartbeat - _lastHeartBeat.get(nodeID)) >= _staleInterval * 2) {
-                                __log.info("Marking Node " + nodeID
-                                        + " as stale, since heartbeat is exceeding double stale interval");  // TODO make this as a debug log
+                                if (__log.isDebugEnabled()) {
+                                    __log.debug("Marking Node " + nodeID
+                                                + " as stale, since heartbeat is exceeding double stale interval");
+                                }
                                 staleNodes.add(nodeID);
                             }
                         }
@@ -963,11 +974,15 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
     }
     /** Method doUpgrade() is related to New ODE clustering implementation BPS-675 **/
     boolean doUpgrade() {
-        __log.info("UPGRADE started");  // TODO make this as a debug log
+        if (__log.isDebugEnabled()) {
+            __log.debug("UPGRADE started");
+        }
         final ArrayList<String> knownNodes;
         if (cluster != null && cluster.isClusterEnabled()) {
             if (!cluster.isLeader()) {
-                __log.info("Ignored doUpgrade, Since this node (" + _nodeId + ") is not the leader."); // TODO make this as a debug log
+                if (__log.isDebugEnabled()) {
+                    __log.debug("Ignored doUpgrade, Since this node (" + _nodeId + ") is not the leader.");
+                }
                 return true;
             } else {
                 // Leader
@@ -1059,7 +1074,9 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
      * Related to BPS-675
      */
     void recoverStaleNode(final String nodeId) {
-        __log.info("recovering stale node " + nodeId); // TODO make this as a debug log
+        if (__log.isDebugEnabled()) {
+            __log.debug("recovering stale node " + nodeId);
+        }
         if (cluster != null && cluster.isClusterEnabled()) {
             if (!cluster.isLeader()) {
                 __log.info("Ignored recoverStaleNode, Since this node (" + _nodeId + ") is not the leader.");
