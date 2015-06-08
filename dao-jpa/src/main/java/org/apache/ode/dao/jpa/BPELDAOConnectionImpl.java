@@ -212,8 +212,6 @@ public class BPELDAOConnectionImpl implements BpelDAOConnection, FilteredInstanc
 
 		}
 
-		__log.info("result size " + result.size());
-
 		return instance;
 	}
 
@@ -326,8 +324,6 @@ public class BPELDAOConnectionImpl implements BpelDAOConnection, FilteredInstanc
 			
 		}
 		
-		__log.info("result size "+result.size());
-
 		return rootScope;
 	}
 	
