@@ -174,7 +174,7 @@ public class ProcessInstanceDAOImpl extends OpenJPADAO implements ProcessInstanc
     public ScopeDAO createScope(ScopeDAO parentScope, String name, int scopeModelId) {
         ScopeDAOImpl ret = new ScopeDAOImpl((ScopeDAOImpl)parentScope,name,scopeModelId,this);
         ret.setState(ScopeStateEnum.ACTIVE);
-        _scopes.add(ret);
+        //_scopes.add(ret); // Commented for BPS-682
         _rootScope = (parentScope == null)?ret:_rootScope;
 
         // Must persist the scope to generate a scope ID
@@ -497,7 +497,7 @@ public class ProcessInstanceDAOImpl extends OpenJPADAO implements ProcessInstanc
     }
 
     public void addMessageExchange(MessageExchangeDAO dao) {
-        if (!_messageExchanges.contains(dao)) {
+        if (getEM().find(MessageExchangeDAOImpl.class, dao.getMessageExchangeId()) == null) {
             _messageExchanges.add(dao);
             if (__log.isDebugEnabled()) {
                 __log.debug("MessageExchangeDAO with id:" + dao.getMessageExchangeId() + " is in-cooperated with " +
