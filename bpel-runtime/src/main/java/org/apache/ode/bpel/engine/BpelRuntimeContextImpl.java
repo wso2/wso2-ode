@@ -815,7 +815,7 @@ public class BpelRuntimeContextImpl implements BpelRuntimeContext {
         mexDao.setPartnerLink(plinkDAO);
         mexDao.setProcess(_dao.getProcess());
         mexDao.setInstance(_dao);
-        _dao.addMessageExchange(mexDao);
+        //_dao.addMessageExchange(mexDao);// Commented for BPS-682
         mexDao.setPattern((operation.getOutput() != null ? MessageExchangePattern.REQUEST_RESPONSE
                 : MessageExchangePattern.REQUEST_ONLY).toString());
         mexDao.setChannel(channel == null ? null : channel.export());
