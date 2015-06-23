@@ -100,7 +100,7 @@
                         <xs:element name="cleanup" minOccurs="0" maxOccurs="3" type="dd:tCleanup" />
                         <xs:element name="schedule" minOccurs="0" maxOccurs="unbounded" type="dd:tSchedule">
                         </xs:element>
-                        <xs:element name="bamServerProfiles" type="dd:tBAMServerProfiles" maxOccurs="1" minOccurs="0"/>
+                        <xs:element name="analyticsServerProfiles" type="dd:tAnalyticsServerProfiles" maxOccurs="1" minOccurs="0"/>
                     </xs:sequence>
 
                     <xs:attribute name="name" type="xs:QName" use="required"/>
@@ -235,7 +235,7 @@
         <xs:attribute name="when" type="xs:string" use="required"></xs:attribute>
     </xs:complexType>
 
-    <xs:complexType name="tBAMServerProfiles">
+    <xs:complexType name="tAnalyticsServerProfiles">
         <xs:sequence>
             <xs:element name="profile" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
