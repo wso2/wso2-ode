@@ -41,4 +41,13 @@ public class EmbeddedGeronimoFactory {
         }
     }
 
+    public TransactionManager getTransactionManager(int timeOut) {
+        LOG.info("Using embedded Geronimo transaction manager with timeout");
+        try {
+            return new GeronimoTransactionManager(timeOut);
+        } catch (Exception except) {
+            throw new IllegalStateException("Unable to instantiate Geronimo Transaction Manager", except);
+        }
+    }
+
 }
