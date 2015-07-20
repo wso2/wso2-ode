@@ -61,7 +61,7 @@ public class MessageRouteDAOImpl implements MessageRouteDAO {
 
     @SuppressWarnings("unused")
     @Basic @Column(name="PROCESS_INSTANCE_ID", insertable=false, updatable=false, nullable=true)
-    private int _instanceId;
+    private Long _instanceId;
     @ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.PERSIST}) @Column(name="PROCESS_INSTANCE_ID")
     private ProcessInstanceDAOImpl _processInst;
 
