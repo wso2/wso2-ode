@@ -41,6 +41,11 @@ public class EmbeddedGeronimoFactory {
         }
     }
 
+    /**
+     * Get the transaction manager with a specified timeout.
+     * @param timeOut
+     * @return TransactionManager
+     */
     public TransactionManager getTransactionManager(int timeOut) {
         LOG.info("Using embedded Geronimo transaction manager with timeout");
         try {
