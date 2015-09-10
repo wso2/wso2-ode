@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.geronimo.transaction.manager.GeronimoTransactionManager;
 
 import javax.transaction.TransactionManager;
+import javax.transaction.xa.XAException;
 
 public class EmbeddedGeronimoFactory {
     private static final Log LOG = LogFactory.getLog(EmbeddedGeronimoFactory.class);
@@ -36,8 +37,8 @@ public class EmbeddedGeronimoFactory {
         LOG.info("Using embedded Geronimo transaction manager");
         try {
             return new GeronimoTransactionManager();
-        } catch (Exception except) {
-            throw new IllegalStateException("Unable to instantiate Geronimo Transaction Manager", except);
+        } catch (XAException exception) {
+            throw new IllegalStateException("Unable to instantiate Geronimo Transaction Manager", exception);
         }
     }
 
@@ -50,8 +51,8 @@ public class EmbeddedGeronimoFactory {
         LOG.info("Using embedded Geronimo transaction manager with timeout");
         try {
             return new GeronimoTransactionManager(timeOut);
-        } catch (Exception except) {
-            throw new IllegalStateException("Unable to instantiate Geronimo Transaction Manager", except);
+        } catch (XAException exception) {
+            throw new IllegalStateException("Unable to instantiate Geronimo Transaction Manager", exception);
         }
     }
 
