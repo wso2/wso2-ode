@@ -21,10 +21,14 @@ package org.apache.ode.test;
 
 import javax.xml.namespace.QName;
 
+import org.apache.ode.bpel.dao.ProcessInstanceDAO;
 import org.apache.ode.bpel.iapi.ProcessConf;
 import org.apache.ode.bpel.iapi.ProcessState;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @author Matthieu Riou <mriou at apache dot org>
@@ -62,23 +66,27 @@ public class VersionedRedeployTest extends BPELTestAbstract {
     @Test public void testInstancePersistence() throws Throwable {
         // Checking for each step that all instances still exist and that each process got one execution
         // so no instance has been created after a process has been retired.
+        int reference = 0;
+        if(_cf.getConnection() != null && _cf.getConnection().getProcess(qName1) != null){
+            reference = _cf.getConnection().getProcess(qName1).getNumInstances();
+        }
+
         go("/bpel/2.0/TestVersionedRedeploy/HelloWorld-1");
-        Assert.assertEquals(1, _cf.getConnection().getProcess(qName1).getNumInstances());
+        Assert.assertEquals(reference + 1, _cf.getConnection().getProcess(qName1).getNumInstances());
 
         // clean up deployment and invocations
         _deployments.clear();
         _invocations.clear();
 
         go("/bpel/2.0/TestVersionedRedeploy/HelloWorld-2");
-        Assert.assertEquals(1, _cf.getConnection().getProcess(qName1).getNumInstances());
+        Assert.assertEquals(reference + 1, _cf.getConnection().getProcess(qName1).getNumInstances());
         Assert.assertEquals(1, _cf.getConnection().getProcess(qName2).getNumInstances());
 
-        // clean up deployment and invocations
         _deployments.clear();
         _invocations.clear();
 
         go("/bpel/2.0/TestVersionedRedeploy/HelloWorld-3");
-        Assert.assertEquals(1, _cf.getConnection().getProcess(qName1).getNumInstances());
+        Assert.assertEquals(reference +  1, _cf.getConnection().getProcess(qName1).getNumInstances());
         Assert.assertEquals(1, _cf.getConnection().getProcess(qName2).getNumInstances());
         Assert.assertEquals(1, _cf.getConnection().getProcess(qName3).getNumInstances());
     }
