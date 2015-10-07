@@ -21,14 +21,10 @@ package org.apache.ode.test;
 
 import javax.xml.namespace.QName;
 
-import org.apache.ode.bpel.dao.ProcessInstanceDAO;
 import org.apache.ode.bpel.iapi.ProcessConf;
 import org.apache.ode.bpel.iapi.ProcessState;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author Matthieu Riou <mriou at apache dot org>
