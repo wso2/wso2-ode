@@ -62,6 +62,10 @@ public class VersionedRedeployTest extends BPELTestAbstract {
     @Test public void testInstancePersistence() throws Throwable {
         // Checking for each step that all instances still exist and that each process got one execution
         // so no instance has been created after a process has been retired.
+	    // Clean up first.
+	    doUndeployments();
+	    _invocations.clear();
+
         int reference = 0;
         if(_cf.getConnection() != null && _cf.getConnection().getProcess(qName1) != null){
             reference = _cf.getConnection().getProcess(qName1).getNumInstances();
