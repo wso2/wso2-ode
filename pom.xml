@@ -24,7 +24,7 @@
     <groupId>org.wso2.bpel</groupId>
     <artifactId>ode</artifactId>
     <packaging>pom</packaging>
-    <version>1.3.5-wso2v16-SNAPSHOT</version>
+    <version>1.3.6-wso2v1-SNAPSHOT</version>
 
     <name>ODE</name>
     <description>Apache ODE (Orchestration Director Engine) executes business processes written
@@ -77,20 +77,20 @@
 
     <properties>
 
-        <ode.version>1.3.5-wso2v16-SNAPSHOT</ode.version>
+        <ode.version>1.3.6</ode.version>
 
-        <activation.version>1.1</activation.version>
-        <annogen.version>0.1.0</annogen.version>
+        <!--<activation.version>1.1</activation.version>
+        <annogen.version>0.1.0</annogen.version>-->
         <antlr.version>2.7.7</antlr.version>
         <axiom.version>1.2.11-wso2v6</axiom.version>
         <exp.pkg.version.axiom>1.2.11.wso2v6</exp.pkg.version.axiom>
         <imp.pkg.version.axiom>[1.2.11.wso2v6, 1.3.0)</imp.pkg.version.axiom>
-        <axis2.version>1.6.1-wso2v12</axis2.version>
-        <exp.pkg.version.axis2>1.6.1.wso2v12</exp.pkg.version.axis2>
-        <imp.pkg.version.axis2>[1.6.1.wso2v11, 1.7.0)</imp.pkg.version.axis2>
-        <rampart.version>1.6.1-wso2v14</rampart.version>
+        <!--<axis2.version>1.7.0</axis2.version>
+        <exp.pkg.version.axis2>1.7.0</exp.pkg.version.axis2>
+        <imp.pkg.version.axis2>[1.7.0, 1.8.0)</imp.pkg.version.axis2>
+        <rampart.version>1.6.1-wso2v14</rampart.version>-->
         <commons.codec.version>1.3</commons.codec.version>
-        <backport.concurrent.version>3.1</backport.concurrent.version>
+        <!--<backport.concurrent.version>3.1</backport.concurrent.version>-->
         <commons.fileupload.version>1.2</commons.fileupload.version>
         <commons.collections.version>3.2.1</commons.collections.version>
         <commons.httpclient.version>3.1</commons.httpclient.version>
@@ -99,83 +99,83 @@
         <commons.logging.version>1.2</commons.logging.version>
         <commons.pool.version>1.4</commons.pool.version>
         <commons.primitives.version>1.0</commons.primitives.version>
-        <commons.dbcp.version>1.2.1</commons.dbcp.version>
+        <!--<commons.dbcp.version>1.2.1</commons.dbcp.version>-->
         <httpcomponents.version>4.0</httpcomponents.version>
-        <jaxb-api.version>2.1</jaxb-api.version>
-        <jaxb.version>2.1.6</jaxb.version>
+        <!--<jaxb-api.version>2.1</jaxb-api.version>
+        <jaxb.version>2.1.6</jaxb.version>-->
         <jaxen.version>1.1.1</jaxen.version>
-        <jettison.version>1.1</jettison.version>
+        <!--<jettison.version>1.1</jettison.version>-->
         <jibx.version>1.1.5</jibx.version>
         <neethi.version>2.0.4</neethi.version>
         <woden.version>1.0M8</woden.version>
         <wsdl4j.version>1.6.2</wsdl4j.version>
-        <woodstox.version>4.2.0</woodstox.version>
+        <!--<woodstox.version>4.2.0</woodstox.version>-->
         <javax.mail.version>1.4</javax.mail.version>
         <hibernate.version>3.2.5.ga</hibernate.version>
-        <spring.version>2.5.6</spring.version>
+        <!--<spring.version>2.5.6</spring.version>-->
         <geronimo.specs.version>1.0</geronimo.specs.version>
         <geronimo.version>2.0.1</geronimo.version>
         <geronimo.activation.version>1.0.1</geronimo.activation.version>
-        <geronimo.annotation.version>1.1</geronimo.annotation.version>
+        <!--<geronimo.annotation.version>1.1</geronimo.annotation.version>-->
         <geronimo.javamail.version>1.2</geronimo.javamail.version>
         <geronimo.stax-api.version>1.0.1</geronimo.stax-api.version>
         <geronimo.specs.jta.version>1.1</geronimo.specs.jta.version>
-        <geronimo.specs.ejb.version>1.1</geronimo.specs.ejb.version>
-        <jetty.version>6.1.5</jetty.version>
+        <!--<geronimo.specs.ejb.version>1.1</geronimo.specs.ejb.version>-->
+        <!--<jetty.version>6.1.5</jetty.version>
         <jencks.version>2.1</jencks.version>
-        <jasper.version>4.2.20RC0</jasper.version>
+        <jasper.version>4.2.20RC0</jasper.version>-->
         <log4j.version>1.2.17</log4j.version>
-        <saxon.version>9.4</saxon.version>
+        <!--<saxon.version>9.4</saxon.version>
         <servicemix.version>3.3</servicemix.version>
         <slf4j.version>1.5.10</slf4j.version>
-        <stax-api.version>1.0</stax-api.version>
+        <stax-api.version>1.0</stax-api.version>-->
         <xerces.version>2.9.0</xerces.version>
-        <xmlresolver.version>1.2</xmlresolver.version>
+        <!--<xmlresolver.version>1.2</xmlresolver.version>-->
         <xmlbeans.version>2.3.0</xmlbeans.version>
-        <xstream.version>1.2</xstream.version>
+        <!--<xstream.version>1.2</xstream.version>-->
         <junit.version>4.4</junit.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
         <persistence-api.version>1.0</persistence-api.version>
         <xalan.version>2.7.1</xalan.version>
-        <ant.version>1.6.5</ant.version>
+        <!--<ant.version>1.6.5</ant.version>-->
         <openjpa.version>2.2.0-wso2v1</openjpa.version>
         <serp.version>1.13.1</serp.version>
         <dom4j.version>1.6.1</dom4j.version>
         <derby.version>10.5.3.0_1</derby.version>
-        <jmock.version>1.2.0</jmock.version>
+        <!--<jmock.version>1.2.0</jmock.version>-->
         <xml.parser.version>2.6.2</xml.parser.version>
-        <activemq.version>4.1.1</activemq.version>
+        <!--<activemq.version>4.1.1</activemq.version>-->
         <xml-apis.version>1.3.04</xml-apis.version>
-        <servicemix.nmr.version>1.1.0</servicemix.nmr.version>
-        <axis2.transport.version>1.1.0-wso2v12</axis2.transport.version>
+        <!--<servicemix.nmr.version>1.1.0</servicemix.nmr.version>
+        <axis2.transport.version>1.7.0</axis2.transport.version>
         <rhino.version>1.7R1</rhino.version>
         <orbit.version.hazelcast.wso2>3.2.6.wso2v3</orbit.version.hazelcast.wso2>
-        <orbit.version.hazelcast>3.0.1</orbit.version.hazelcast>
+        <orbit.version.hazelcast>3.0.1</orbit.version.hazelcast>-->
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
-        <version.h2.engine>1.2.140</version.h2.engine>
+        <!--<version.h2.engine>1.2.140</version.h2.engine>-->
         <tranql.version>1.1</tranql.version>
-        <xjavadoc.version>1.1-j5</xjavadoc.version>
-        <jbi.version>1.1.0</jbi.version>
+        <!--<xjavadoc.version>1.1-j5</xjavadoc.version>
+        <jbi.version>1.1.0</jbi.version>-->
 
         <maven.incremental.plugin.version>1.3</maven.incremental.plugin.version>
-        <maven.assembly.plugin.version>2.4</maven.assembly.plugin.version>
+        <!--<maven.assembly.plugin.version>2.4</maven.assembly.plugin.version>
         <maven.build.helper.plugin.version>1.7</maven.build.helper.plugin.version>
-        <maven.processor.plugin.version>2.0.5</maven.processor.plugin.version>
+        <maven.processor.plugin.version>2.0.5</maven.processor.plugin.version>-->
         <maven.surefire.plugin.version>2.4.3</maven.surefire.plugin.version>
-        <maven.bundle.plugin.version>1.4.0</maven.bundle.plugin.version>
+        <!--<maven.bundle.plugin.version>1.4.0</maven.bundle.plugin.version>
         <sql.maven.plugin.version>1.2</sql.maven.plugin.version>
         <maven.javadoc.plugin.version>2.5</maven.javadoc.plugin.version>
-        <xdoclet.maven.plugin.version>1.0</xdoclet.maven.plugin.version>
+        <xdoclet.maven.plugin.version>1.0</xdoclet.maven.plugin.version>-->
 
-	<project.scm.id>wso2-scm-server</project.scm.id>
+	    <!--<project.scm.id>wso2-scm-server</project.scm.id>-->
     </properties>
 
     <modules>
-        <module>agents</module>
+        <!--<module>agents</module>
         <module>utils</module>
-        <module>jacob</module>
+        <module>jacob</module>-->
         <!--module>jacob-ap</module-->
-        <module>bpel-schemas</module>
+        <!--<module>bpel-schemas</module>
         <module>bpel-scripts</module>
         <module>bpel-api</module>
         <module>bpel-api-jca</module>
@@ -196,15 +196,15 @@
         <module>bpel-runtime</module>
         <module>bpel-connector</module>
         <module>bpel-test</module>
-        <module>axis2</module>
+        <module>axis2</module>-->
         <!--<module>jbi</module>
         <module>jbi-bundle</module>
         <module>jbi-karaf</module>
         <module>distro/src/examples-jbi/maven2/ping-pong-osgi</module>-->
         <!--module>axis2-war</module-->
         <!--module>bpel-itest</module-->
-        <module>bpel-extensions/e4x</module>
-        <module>bpel-extensions/long-running</module>
+        <!--<module>bpel-extensions/e4x</module>
+        <module>bpel-extensions/long-running</module>-->
         <module>orbit</module>
     </modules>
 
@@ -392,11 +392,11 @@
             <releases>
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
+                <checksumPolicy>fail</checksumPolicy>
             </releases>
         </repository>
 
-        <repository>
+        <!--<repository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
             <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
@@ -418,10 +418,10 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
-        </repository>
+        </repository>-->
     </repositories>
 
-    <pluginRepositories>
+    <!--<pluginRepositories>
         <pluginRepository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
@@ -455,117 +455,112 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories>-->
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-agents</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-runtime</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-ql</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-schemas</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-api</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-dao</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-api-jca</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-compiler</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-obj</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-scripts</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-store</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-connector</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
-                <artifactId>ode-dao-hibernate</artifactId>
-                <version>${ode.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-jacob</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <!--<dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-jbi</artifactId>
                 <version>${ode.version}</version>
             </dependency>-->
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-bpel-epr</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-dao-jpa</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-jca-ra</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-jca-server</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-tools</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-utils</artifactId>
                 <version>${ode.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bpel</groupId>
+                <groupId>org.apache.ode</groupId>
                 <artifactId>ode-scheduler-simple</artifactId>
                 <version>${ode.version}</version>
             </dependency>
@@ -574,11 +569,11 @@
                 <artifactId>ode-bpel-test</artifactId>
                 <version>${ode.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.wso2.bpel</groupId>
-                <artifactId>ode-axis2</artifactId>
-                <version>${ode.version}</version>
-            </dependency>
+            <!--<dependency>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2</artifactId>
+                <version>${axis2.version}</version>
+            </dependency>-->
             <dependency>
                 <groupId>xalan</groupId>
                 <artifactId>xalan</artifactId>
@@ -966,7 +961,7 @@
             </dependency>
 
             <!-- AXIS2 dependencies -->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.apache.axis2</groupId>
                 <artifactId>axis2-adb</artifactId>
                 <version>${axis2.version}</version>
@@ -1039,8 +1034,8 @@
             <dependency>
                 <groupId>org.apache.axis2.transport</groupId>
                 <artifactId>axis2-transport-jms</artifactId>
-                <version>${axis2.transport.version}</version>
-            </dependency>
+                <version>${axis2.version}</version>
+            </dependency>-->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -1132,10 +1127,10 @@
 And then run this profile, those classes with @ChannelType will be regenerated. -->
             <id>all</id>
             <modules>
-                <module>agents</module>
-                <module>utils</module>
+                <!--<module>agents</module>
+                <module>utils</module>-->
                 <!--module>jacob-ap</module-->
-                <module>jacob</module>
+                <!--<module>jacob</module>
                 <module>bpel-schemas</module>
                 <module>bpel-scripts</module>
                 <module>bpel-api</module>
@@ -1157,14 +1152,14 @@ And then run this profile, those classes with @ChannelType will be regenerated. 
                 <module>bpel-runtime</module>
                 <module>bpel-connector</module>
                 <module>bpel-test</module>
-                <module>axis2</module>
+                <module>axis2</module>-->
                 <!--<module>jbi</module>
                 <module>jbi-bundle</module>
                 <module>jbi-karaf</module>
                 <module>distro/src/examples-jbi/maven2/ping-pong-osgi</module>-->
                 <!--module>axis2-war</module>
                 <module>bpel-itests</module-->
-                <module>distro</module>
+                <!--<module>distro</module>-->
                 <module>orbit</module>
             </modules>
         </profile>

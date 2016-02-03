@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.wso2.bpel</groupId>
         <artifactId>ode</artifactId>
-        <version>1.3.5-wso2v16-SNAPSHOT</version>
+        <version>1.3.6-wso2v1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -36,87 +36,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
-            <artifactId>ode-axis2</artifactId>
-            <version>${ode.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.ws.commons.axiom</groupId>
-                    <artifactId>axiom-dom</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.ws.commons.axiom</groupId>
-                    <artifactId>axiom-impl</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.ws.commons.axiom</groupId>
-                    <artifactId>axiom-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-lang</groupId>
-                    <artifactId>commons-lang</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-httpclient</groupId>
-                    <artifactId>commons-httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.axis2</groupId>
-                    <artifactId>axis2-transport-jms</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.axis2</groupId>
-                    <artifactId>axis2-kernel</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.axis2</groupId>
-                    <artifactId>axis2-saaj</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.axis2</groupId>
-                    <artifactId>axis2-adb</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.axis2</groupId>
-                    <artifactId>axis2-codegen</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.axis2</groupId>
-                    <artifactId>axis2-java2wsdl</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.rampart</groupId>
-                    <artifactId>rampart-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.rampart</groupId>
-                    <artifactId>rampart-policy</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.rampart</groupId>
-                    <artifactId>rampart-trust</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.geronimo.components</groupId>
-                    <artifactId>geronimo-transaction</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-				<exclusion>
-                    <groupId>org.wso2.bpel</groupId>
-                    <artifactId>ode-tools</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-api-jca</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -125,10 +45,14 @@
                     <groupId>org.apache.geronimo.specs</groupId>
                     <artifactId>geronimo-j2ee-connector_1.5_spec</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.axis2</groupId>
+                    <artifactId>axis2-transports</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-api</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -141,10 +65,14 @@
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.axis2</groupId>
+                    <artifactId>axis2-transports</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-scheduler-simple</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -172,7 +100,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-compiler</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -240,25 +168,25 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-connector</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-dao</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-ql</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-schemas</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -270,7 +198,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-store</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -316,13 +244,13 @@
                     <artifactId>persistence-api</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.wso2.bpel</groupId>
+                    <groupId>org.apache.ode</groupId>
                     <artifactId>ode-dao-hibernate</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-runtime</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -390,7 +318,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-dao-jpa</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -434,7 +362,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-jacob</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -446,7 +374,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-jca-ra</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -458,7 +386,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-jca-server</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -470,7 +398,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-utils</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -571,38 +499,20 @@
                     <groupId>com.thoughtworks.xstream</groupId>
                     <artifactId>xstream</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.axis2</groupId>
+                    <artifactId>axis2-transports</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-agents</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-	    <groupId>org.wso2.bpel</groupId>
-	    <artifactId>ode-dao-hibernate</artifactId>
-            <version>${ode.version}</version>
-            <exclusions>
-            <exclusion>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-                </exclusion>               
-            </exclusions>
-         </dependency>
-	 <dependency>
-    		<groupId>org.wso2.bpel</groupId>
-    		<artifactId>ode-dao-hibernate-db</artifactId>
-	        <version>${ode.version}</version>
-            	<exclusions>
-                <exclusion>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-                </exclusion>               
-            </exclusions>
-         </dependency>
-        <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-obj</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -634,7 +544,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.bpel</groupId>
+            <groupId>org.apache.ode</groupId>
             <artifactId>ode-bpel-epr</artifactId>
             <version>${ode.version}</version>
             <optional>true</optional>
@@ -668,23 +578,8 @@
                     <artifactId>h2</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency><!--
-        <dependency>
-            <groupId>asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>1.5.3</version>
         </dependency>
         <dependency>
-            <groupId>wsdl4j</groupId>
-            <artifactId>wsdl4j</artifactId>
-            <version>1.6.2.wso2v2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.axis2.wso2</groupId>
-            <artifactId>axis2</artifactId>
-            <version>${orbit.version.axis2}</version>
-        </dependency>
-	--><dependency>
             <groupId>org.wso2.bpel.extensions</groupId>
             <artifactId>ode-bpel-extensions-e4x</artifactId>
             <version>${ode.extension.version}</version>
@@ -712,7 +607,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -740,7 +634,6 @@
                             javax.xml.stream.events;version="1.0.1",
                             javax.xml.stream.util;version="1.0.1",
                             javax.transaction.*,
-                            org.apache.axis2.*; version="${imp.pkg.version.axis2}",
                             org.apache.axiom.*; version="${imp.pkg.version.axiom}",
                             org.w3c.*,
                             javax.wsdl.*,
@@ -748,7 +641,7 @@
                             *;resolution:=optional
                         </Import-Package>
                         <Embed-Dependency>
-			    ode-agents|ode-axis2|ode-bpel-api-jca|ode-bpel-api|ode-scheduler-simple|ode-bpel-compiler|ode-bpel-connector|ode-bpel-dao|ode-bpel-ql|ode-bpel-schemas|ode-bpel-store|ode-dao-jpa|ode-dao-hibernate|ode-dao-hibernate-db|ode-bpel-runtime|ode-jacob|ode-jca-ra|ode-jca-server|ode-bpel-epr|ode-bpel-obj|ode-bpel-extensions-e4x|ode-bpel-extensions-long-running|ode-utils;scope=compile|runtime;inline=false;
+			    ode-agents|ode-bpel-api-jca|ode-bpel-api|ode-scheduler-simple|ode-bpel-compiler|ode-bpel-connector|ode-bpel-dao|ode-bpel-ql|ode-bpel-schemas|ode-bpel-store|ode-dao-jpa|ode-bpel-runtime|ode-jacob|ode-jca-ra|ode-jca-server|ode-bpel-epr|ode-bpel-obj|ode-bpel-extensions-e4x|ode-bpel-extensions-long-running|ode-utils;scope=compile|runtime;inline=false;
                         </Embed-Dependency>
                         <DynamicImport-Package>*</DynamicImport-Package>
                         <JPA-PersistenceUnits>ode-dao,ode-store</JPA-PersistenceUnits>
@@ -758,8 +651,7 @@
         </plugins>
     </build>
     <properties>
-        <ode.version>1.3.5-wso2v16-SNAPSHOT</ode.version>
-        <ode.extension.version>1.3.5-wso2v16-SNAPSHOT</ode.extension.version>
+        <ode.extension.version>1.3.6-wso2v1-SNAPSHOT</ode.extension.version>
         <maven.bundle.plugin.version>1.4.0</maven.bundle.plugin.version>
     </properties>
 </project>
