@@ -629,8 +629,9 @@
                         </_exportcontents>
                         <Import-Package>
                             !org.apache.ode.*,
+                            !com.sun.mirror*,
                             com.ibm.wsdl;resolution:=mandatory,
-                            javax.xml.stream;version="1.0.1",
+                            javax.xml.stream;version="[1.0,1.1)",
                             javax.xml.stream.events;version="1.0.1",
                             javax.xml.stream.util;version="1.0.1",
                             javax.transaction.*,
@@ -640,9 +641,9 @@
                             net.sf.saxon.*;version="[9.0.0.x, 10.0)",
                             *;resolution:=optional
                         </Import-Package>
-                        <Embed-Dependency>
+                        <!--<Embed-Dependency>
 			    ode-agents|ode-bpel-api-jca|ode-bpel-api|ode-scheduler-simple|ode-bpel-compiler|ode-bpel-connector|ode-bpel-dao|ode-bpel-ql|ode-bpel-schemas|ode-bpel-store|ode-dao-jpa|ode-bpel-runtime|ode-jacob|ode-jca-ra|ode-jca-server|ode-bpel-epr|ode-bpel-obj|ode-bpel-extensions-e4x|ode-bpel-extensions-long-running|ode-utils;scope=compile|runtime;inline=false;
-                        </Embed-Dependency>
+                        </Embed-Dependency>-->
                         <DynamicImport-Package>*</DynamicImport-Package>
                         <JPA-PersistenceUnits>ode-dao,ode-store</JPA-PersistenceUnits>
                     </instructions>
