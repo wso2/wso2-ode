@@ -82,13 +82,15 @@
         <activation.version>1.1</activation.version>
         <annogen.version>0.1.0</annogen.version>
         <antlr.version>2.7.7</antlr.version>
-        <axiom.version>1.2.11-wso2v6</axiom.version>
-        <exp.pkg.version.axiom>1.2.11.wso2v6</exp.pkg.version.axiom>
-        <imp.pkg.version.axiom>[1.2.11.wso2v6, 1.3.0)</imp.pkg.version.axiom>
-        <axis2.version>1.6.1-wso2v12</axis2.version>
-        <exp.pkg.version.axis2>1.6.1.wso2v12</exp.pkg.version.axis2>
-        <imp.pkg.version.axis2>[1.6.1.wso2v11, 1.7.0)</imp.pkg.version.axis2>
-        <rampart.version>1.6.1-wso2v14</rampart.version>
+        <axiom.version>1.2.11-wso2v10</axiom.version>
+        <exp.pkg.version.axiom>1.2.11</exp.pkg.version.axiom>
+        <imp.pkg.version.axiom>[1.2.11, 1.3.0)</imp.pkg.version.axiom>
+        <axis2.version>1.6.1-wso2v17</axis2.version>
+        <exp.pkg.version.axis2>1.6.1</exp.pkg.version.axis2>
+        <imp.pkg.version.axis2>[1.6.1, 1.7.0)</imp.pkg.version.axis2>
+	<axis2.transport.version>1.1.1-wso2v1</axis2.transport.version>
+	<imp.pkg.version.axis2-transport-jms>[1.1.0, 1.2.0)</imp.pkg.version.axis2-transport-jms>
+        <rampart.version>1.6.1-wso2v18</rampart.version>
         <commons.codec.version>1.3</commons.codec.version>
         <backport.concurrent.version>3.1</backport.concurrent.version>
         <commons.fileupload.version>1.2</commons.fileupload.version>
@@ -147,7 +149,6 @@
         <activemq.version>4.1.1</activemq.version>
         <xml-apis.version>1.3.04</xml-apis.version>
         <servicemix.nmr.version>1.1.0</servicemix.nmr.version>
-        <axis2.transport.version>1.1.0-wso2v12</axis2.transport.version>
         <rhino.version>1.7R1</rhino.version>
         <orbit.version.hazelcast.wso2>3.2.6.wso2v3</orbit.version.hazelcast.wso2>
         <orbit.version.hazelcast>3.0.1</orbit.version.hazelcast>
