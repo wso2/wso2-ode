@@ -2,6 +2,15 @@
   Apache ODE
 ==============
 
+---
+
+|  Branch | Build Status |
+| :------------ |:-------------
+| master      | [![Build Status](https://wso2.org/jenkins/job/wso2-ode/badge/icon)](https://wso2.org/jenkins/job/wso2-ode) |
+
+
+---
+
 Apache ODE is a WS-BPEL compliant web services orchestration engine.
 It organizes web services calls following a process description
 written in BPEL. Another way to describe it would be a web service
