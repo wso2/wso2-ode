@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HCorrelationSet"
+        table="BPEL_CORRELATION_SET"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HCorrelationSet.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <property
+            name="value"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="VALUE"
+        />
+
+        <property
+            name="name"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="CORR_SET_NAME"
+            length="255"
+        />
+
+        <many-to-one
+            name="scope"
+            class="org.apache.ode.daohib.bpel.hobj.HScope"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="SCOPE_ID"
+        />
+
+        <many-to-one
+            name="instance"
+            class="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PIID"
+        />
+
+        <many-to-one
+            name="process"
+            class="org.apache.ode.daohib.bpel.hobj.HProcess"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PROCESS_ID"
+        />
+
+        <set
+            name="properties"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+            sort="unsorted"
+        >
+
+            <key
+                column="CORR_SET_ID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HCorrelationProperty"
+            />
+
+        </set>
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HCorrelationSet.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_CORSET_IDS_BY_INSTANCES"><![CDATA[
+            select id from HCorrelationSet as c where c.instance in (:instances)
+        ]]></query>
+        <query name="SELECT_CORSETS_BY_INSTANCES"><![CDATA[
+            from HCorrelationSet as c left join fetch c.properties where c.instance.id in (:instances)
+        ]]></query>
+        <query name="SELECT_CORSETS_BY_PROCESS_STATES"><![CDATA[
+            from HCorrelationSet as c left join fetch c.process left join fetch c.instance where c.instance.state in (:states)
+        ]]></query>
+
+</hibernate-mapping>

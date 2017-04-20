@@ -42,13 +42,18 @@ import java.util.Date;
 @Entity
 @Table(name="ODE_ACTIVITY_RECOVERY")
 @NamedQueries({
-    @NamedQuery(name=ActivityRecoveryDAOImpl.DELETE_ACTIVITY_RECOVERIES_BY_IDS, query="delete from ActivityRecoveryDAOImpl as a where a._instanceId in(:ids)"),
-    @NamedQuery(name=ActivityRecoveryDAOImpl.COUNT_ACTIVITY_RECOVERIES_BY_INSTANCES,
-            query="select r._instanceId, count(r._id) from ActivityRecoveryDAOImpl r where r._instance in(:instances) group by r._instanceId")
+        @NamedQuery(name=ActivityRecoveryDAOImpl.DELETE_ACTIVITY_RECOVERIES_BY_IDS, query="delete from ActivityRecoveryDAOImpl as a where a._instanceId in(:ids)"),
+        @NamedQuery(name=ActivityRecoveryDAOImpl.COUNT_ACTIVITY_RECOVERIES_BY_INSTANCES,
+                query="select r._instanceId, count(r._id) from ActivityRecoveryDAOImpl r where r._instance in(:instances) group by r._instanceId"),
+        @NamedQuery(name=ActivityRecoveryDAOImpl.SELECT_ALL_FAILED_ACTIVITIES,query="select ar from ActivityRecoveryDAOImpl ar"),
+        @NamedQuery(name=ActivityRecoveryDAOImpl.COUNT_All_ACTIVITY_RECOVERIES,query="select ar._instanceId, count(ar) from ActivityRecoveryDAOImpl ar")
+
 })
 public class ActivityRecoveryDAOImpl implements ActivityRecoveryDAO {
     public final static String DELETE_ACTIVITY_RECOVERIES_BY_IDS = "DELETE_ACTIVITY_RECOVERIES_BY_IDS";
     public final static String COUNT_ACTIVITY_RECOVERIES_BY_INSTANCES = "COUNT_ACTIVITY_RECOVERIES_BY_INSTANCES";
+    public final static String SELECT_ALL_FAILED_ACTIVITIES = "SELECT_ALL_FAILED_ACTIVITIES";
+    public final static String COUNT_All_ACTIVITY_RECOVERIES = "COUNT_All_ACTIVITY_RECOVERIES";
 
     @Id @Column(name="ID")
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -72,7 +77,7 @@ public class ActivityRecoveryDAOImpl implements ActivityRecoveryDAO {
 
     @SuppressWarnings("unused")
     @Basic @Column(name="INSTANCE_ID", insertable=false, updatable=false, nullable=true)
-     private Long _instanceId;
+    private Long _instanceId;
 
     // _instances is unused because this is a one-way relationship at the database level
     @SuppressWarnings("unused")
@@ -82,8 +87,8 @@ public class ActivityRecoveryDAOImpl implements ActivityRecoveryDAO {
 
     public ActivityRecoveryDAOImpl() {}
     public ActivityRecoveryDAOImpl(String channel, long activityId,
-            String reason, Date dateTime, Element data, String[] actions,
-            int retries) {
+                                   String reason, Date dateTime, Element data, String[] actions,
+                                   int retries) {
         _channel = channel;
         _activityId = activityId;
         _reason = reason;
@@ -137,6 +142,10 @@ public class ActivityRecoveryDAOImpl implements ActivityRecoveryDAO {
 
     public int getRetries() {
         return _retries;
+    }
+
+    public Long getInstanceId() {
+        return _instanceId;
     }
 
     public ProcessInstanceDAOImpl getInstance() {

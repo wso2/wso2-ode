@@ -1,0 +1,121 @@
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+-->
+
+<wsdl:definitions
+        targetNamespace="http://ode/bpel/unit-test/TestXPathNumberFunctions.wsdl"
+        xmlns:tns="http://ode/bpel/unit-test/TestXPathNumberFunctions.wsdl"
+        xmlns:types1="http://ode/bpel/unit-test/TestXPathNumberFunctions.wsdl.types1"
+        xmlns="http://ode/bpel/unit-test/TestXPathNumberFunctions.wsdl"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+
+    <!-- type defs -->
+    <wsdl:types>
+        <xsd:schema
+                targetNamespace="http://ode/bpel/unit-test/TestXPathNumberFunctions.wsdl.types1"
+                xmlns="http://ode/bpel/unit-test/TestXPathNumberFunctions.wsdl.types1"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="testMessage">
+                <xsd:sequence>
+                    <xsd:element name="inputSum" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="input1" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="requestMessage1">
+        <wsdl:part name="requestMessageData" type="types1:testMessage"/>
+    </wsdl:message>
+
+    <wsdl:message name="replyMessage1">
+        <wsdl:part name="replySum" type="xsd:int"/>
+        <wsdl:part name="replyRound" type="xsd:int"/>
+        <wsdl:part name="replyFloor" type="xsd:int"/>
+        <wsdl:part name="replyCeiling" type="xsd:int"/>
+        <wsdl:part name="replyNumber" type="xsd:string"/>
+    </wsdl:message>
+
+
+    <!-- portType supported by the test2 process -->
+
+    <wsdl:portType name="TestXPathNumberFunctionsPT">
+        <wsdl:operation name="request">
+            <wsdl:input message="requestMessage1"/>
+            <wsdl:output message="replyMessage1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="TestXPathNumberFunctionsSumPT">
+        <wsdl:operation name="requestSum">
+            <wsdl:input message="requestMessage1"/>
+            <wsdl:output message="replyMessage1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="TestXPathNumberFunctionsNumberPT">
+        <wsdl:operation name="requestNumber">
+            <wsdl:input message="requestMessage1"/>
+            <wsdl:output message="replyMessage1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="TestXPathNumberFunctionsBinding" type="tns:TestXPathNumberFunctionsPT">
+        <wsdl:operation name="request">
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="TestXPathNumberFunctionsSumBinding" type="tns:TestXPathNumberFunctionsSumPT">
+        <wsdl:operation name="requestSum">
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="TestXPathNumberFunctionsNumberBinding"
+                  type="tns:TestXPathNumberFunctionsNumberPT">
+        <wsdl:operation name="requestNumber">
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="TestXPathNumberFunctionsService">
+        <wsdl:port name="TestXPathNumberFunctionsPort"
+                   binding="tns:TestXPathNumberFunctionsBinding">
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:service name="TestXPathNumberFunctionsSumService">
+        <wsdl:port name="TestXPathNumberFunctionsSumPort"
+                   binding="tns:TestXPathNumberFunctionsSumBinding">
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:service name="TestXPathNumberFunctionsNumberService">
+        <wsdl:port name="TestXPathNumberFunctionsNumberPort"
+                   binding="tns:TestXPathNumberFunctionsNumberBinding">
+        </wsdl:port>
+    </wsdl:service>
+
+    <plnk:partnerLinkType name="TestXPathNumberFunctionsRequest">
+        <plnk:role name="TestXPathNumberFunctionsService" portType="TestXPathNumberFunctionsPT"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="TestXPathNumberFunctionsSumRequest">
+        <plnk:role name="TestXPathNumberFunctionsService" portType="TestXPathNumberFunctionsSumPT"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="TestXPathNumberFunctionsNumberRequest">
+        <plnk:role name="TestXPathNumberFunctionsService" portType="TestXPathNumberFunctionsNumberPT"/>
+    </plnk:partnerLinkType>
+
+</wsdl:definitions>

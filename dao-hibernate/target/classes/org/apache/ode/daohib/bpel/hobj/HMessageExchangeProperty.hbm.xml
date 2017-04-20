@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HMessageExchangeProperty"
+        table="BPEL_MEX_PROPS"
+        lazy="true"
+    >
+
+        <composite-id
+            name="key"
+            class="org.apache.ode.daohib.bpel.hobj.HMessageExchangeProperty"
+        >
+
+                    <key-many-to-one
+                        name="mex"
+                        class="org.apache.ode.daohib.bpel.hobj.HMessageExchange"
+                        column="MEX"
+                    />
+
+                     <key-property
+                        name="name"
+                        type="string"
+                        column="NAME"
+                        length="8000"
+                />
+
+                     <key-property
+                        name="value"
+                        type="string"
+                        column="VALUE"
+                />
+
+        </composite-id>
+
+        <many-to-one
+            name="mex"
+            class="org.apache.ode.daohib.bpel.hobj.HMessageExchange"
+            cascade="none"
+            outer-join="auto"
+            update="false"
+            insert="false"
+            column="MEX"
+        />
+
+        <property
+            name="name"
+            type="string"
+            update="false"
+            insert="false"
+            column="NAME"
+            length="8000"
+        />
+
+        <property
+            name="value"
+            type="string"
+            update="false"
+            insert="false"
+            column="VALUE"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HMessageExchangeProperty.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_MEX_PROPS_IDS_BY_INSTANCES"><![CDATA[
+            select p.id from HMessageExchangeProperty p, HMessageExchange e where p.mex = e and e.instance in (:instances)
+        ]]></query>
+
+</hibernate-mapping>

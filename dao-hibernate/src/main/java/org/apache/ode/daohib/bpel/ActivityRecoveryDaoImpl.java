@@ -82,4 +82,9 @@ public class ActivityRecoveryDaoImpl extends HibernateDao implements ActivityRec
     public int getRetries() {
         return _self.getRetries();
     }
+
+    @Override
+    public Long getInstanceId() {
+        return null;
+    }
 }

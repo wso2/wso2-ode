@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HXmlData"
+        table="BPEL_XML_DATA"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HXmlData.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <property
+            name="data"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="DATA" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <property
+            name="name"
+            type="string"
+            update="true"
+            insert="true"
+            column="NAME"
+            length="255"
+            not-null="true"
+        />
+
+        <property
+            name="simpleValue"
+            type="string"
+            update="true"
+            insert="true"
+            column="SIMPLE_VALUE"
+            length="255"
+            not-null="false"
+        />
+
+        <bag
+            name="properties"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+        >
+
+            <key
+                column="XML_DATA_ID"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HVariableProperty"
+            />
+
+      </bag>
+
+        <many-to-one
+            name="scope"
+            class="org.apache.ode.daohib.bpel.hobj.HScope"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="SCOPE_ID"
+        />
+
+        <many-to-one
+            name="instance"
+            class="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PIID"
+        />
+
+        <property
+            name="simpleType"
+            type="boolean"
+            update="true"
+            insert="true"
+            column="IS_SIMPLE_TYPE"
+        />
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HXmlData.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_XMLDATA_IDS_BY_INSTANCES"><![CDATA[
+            select id from HXmlData as x where x.instance in (:instances)
+        ]]></query>
+
+</hibernate-mapping>

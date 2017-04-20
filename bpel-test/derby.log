@@ -1,0 +1,12 @@
+----------------------------------------------------------------
+2015-01-06 11:28:26.104 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance a816c00e-014a-bf00-c30e-0000058d4bc8
+on database directory /home/thilini/Documents/BPS/BuildSource/gitwork_Issue1/wso2-ode/bpel-test/target/testdb  
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2015-01-06 11:31:42.699 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 15fa44f2-014a-bf00-c30e-0000058d4bc8
+on database directory /home/thilini/Documents/BPS/BuildSource/gitwork_Issue1/wso2-ode/bpel-test/target/ExternalVariableTest  
+
+Database Class Loader started - derby.database.classpath=''

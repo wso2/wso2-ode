@@ -404,6 +404,11 @@ public class ProcessInstanceDaoImpl extends DaoBaseImpl implements ProcessInstan
             return _retries;
         }
 
+        public Long getInstanceId() {
+            return null;
+        }
+
+
     }
 
     void removeRoutes(String routeGroupId) {

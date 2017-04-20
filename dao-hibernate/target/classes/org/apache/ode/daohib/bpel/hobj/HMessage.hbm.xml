@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HMessage"
+        table="BPEL_MESSAGE"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HMessage.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <many-to-one
+            name="messageExchange"
+            class="org.apache.ode.daohib.bpel.hobj.HMessageExchange"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="MEX"
+        />
+
+        <property
+            name="type"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="TYPE"
+        />
+
+        <property
+            name="messageData"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="MESSAGE_DATA" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <property
+            name="header"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="MESSAGE_HEADER" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HMessage.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_MESSAGE_IDS_BY_MEX"><![CDATA[
+            select id from HMessage as m WHERE m.messageExchange = :messageExchange
+        ]]></query>
+        <query name="SELECT_MESSAGE_IDS_BY_INSTANCES"><![CDATA[
+            select m.id from HMessage m, HMessageExchange mex WHERE m.messageExchange = mex and mex.instance in (:instances)
+        ]]></query>
+        <query name="SELECT_MESSAGES_BY_INSTANCES"><![CDATA[
+            select m from HMessage m, HMessageExchange mex WHERE m.messageExchange = :mex
+        ]]></query>
+
+</hibernate-mapping>

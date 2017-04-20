@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HPartnerLink"
+        table="BPEL_PLINK_VAL"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HPartnerLink.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <property
+            name="linkName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="PARTNER_LINK"
+            length="100"
+            not-null="true"
+        />
+
+        <property
+            name="partnerRole"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="PARTNERROLE"
+            length="100"
+        />
+
+        <property
+            name="myEPR"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="MYROLE_EPR_DATA" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <property
+            name="partnerEPR"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="PARTNERROLE_EPR_DATA" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <many-to-one
+            name="process"
+            class="org.apache.ode.daohib.bpel.hobj.HProcess"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PROCESS"
+        />
+
+        <many-to-one
+            name="scope"
+            class="org.apache.ode.daohib.bpel.hobj.HScope"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="SCOPE"
+        />
+
+        <property
+            name="serviceName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="SVCNAME"
+        />
+
+        <property
+            name="myRole"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="MYROLE"
+            length="100"
+        />
+
+        <property
+            name="modelId"
+            type="int"
+            update="true"
+            insert="true"
+            column="MODELID"
+        />
+
+        <property
+            name="mySessionId"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="MYSESSIONID"
+        />
+
+        <property
+            name="partnerSessionId"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="PARTNERSESSIONID"
+        />
+
+        <set
+            name="messageExchanges"
+            lazy="true"
+            inverse="true"
+            cascade="delete"
+            sort="unsorted"
+        >
+
+            <key
+                column="PARTNERLINK"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.daohib.bpel.hobj.HMessageExchange"
+            />
+
+        </set>
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HPartnerLink.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_PARTNER_LINK_IDS_BY_INSTANCES"><![CDATA[
+            select l.id from HPartnerLink l, HScope s where l.scope = s and s.instance in (:instances)
+        ]]></query>
+
+</hibernate-mapping>

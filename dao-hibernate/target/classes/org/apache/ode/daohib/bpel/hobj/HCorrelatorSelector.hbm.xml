@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HCorrelatorSelector"
+        table="BPEL_SELECTORS"
+        lazy="true"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HCorrelatorSelector.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <many-to-one
+            name="instance"
+            class="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PIID"
+            not-null="true"
+        />
+
+        <property
+            name="groupId"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="SELGRPID" 
+                index="IDX_SELECTOR_SELGRPID"
+                not-null="true"
+            />
+        </property>
+
+        <property
+            name="index"
+            type="int"
+            update="true"
+            insert="true"
+            column="IDX"
+            not-null="true"
+        />
+
+        <property
+            name="correlationKey"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="CORRELATION_KEY" 
+                unique-key="UNIQ_SELECTOR"
+                index="IDX_SELECTOR_CKEY"
+                not-null="true"
+            />
+        </property>
+
+        <property
+            name="processType"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="PROC_TYPE"
+            not-null="true"
+        />
+
+        <property
+            name="route"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="ROUTE_POLICY"
+            not-null="false"
+        />
+
+        <many-to-one
+            name="correlator"
+            class="org.apache.ode.daohib.bpel.hobj.HCorrelator"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+        >
+            <column
+                name="CORRELATOR" 
+                unique-key="UNIQ_SELECTOR"
+                index="IDX_SELECTOR_CORRELATOR"
+                not-null="true"
+            />
+        </many-to-one>
+
+        <property
+            name="correlatorId"
+            type="java.lang.String"
+            update="false"
+            insert="false"
+            column="CORRELATOR"
+            not-null="true"
+        />
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HCorrelatorSelector.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_MESSAGE_ROUTE_IDS_BY_PROCESS"><![CDATA[
+            select id from HCorrelatorSelector as m where m.correlator in(select c from HCorrelator c where c.process = :process)
+        ]]></query>
+        <query name="SELECT_MESSAGE_ROUTE_IDS_BY_INSTANCES"><![CDATA[
+            select id from HCorrelatorSelector as m where m.instance in (:instances)
+        ]]></query>
+        <query name="SELECT_MESSAGE_ROUTE"><![CDATA[
+            select m.id from HCorrelatorSelector as m where m.correlator = :corr and m.correlationKey = :ckey
+        ]]></query>
+
+</hibernate-mapping>

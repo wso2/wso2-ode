@@ -43,4 +43,6 @@ public interface ActivityRecoveryDAO {
 
     int getRetries();
 
+    Long getInstanceId();
+
 }

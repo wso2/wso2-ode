@@ -1,0 +1,12 @@
+----------------------------------------------------------------
+2015-01-29 04:08:18.247 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance a816c00e-014b-33e0-1025-00002deec210
+on database directory /home/thilini/Documents/BPS/BuildSource/gitwork_Issue1/wso2-ode/dao-jpa-ojpa-derby/target/derby/jpadb  
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2015-01-29 04:08:39.748 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 6bfdc18b-014b-33e0-1025-00002deec210
+on database directory /home/thilini/Documents/BPS/BuildSource/gitwork_Issue1/wso2-ode/dao-hibernate-db/target/derby/hibdb  
+
+Database Class Loader started - derby.database.classpath=''

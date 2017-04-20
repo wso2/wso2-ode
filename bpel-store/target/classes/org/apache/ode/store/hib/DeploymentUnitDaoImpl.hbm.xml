@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.store.hib.DeploymentUnitDaoImpl"
+        table="STORE_DU"
+    >
+
+        <id
+            name="name"
+            type="java.lang.String"
+        >
+                <column
+                    name="NAME" 
+                />
+            <generator class="assigned">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-DeploymentUnitDaoImpl.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <bag
+            name="processes"
+            lazy="false"
+            inverse="true"
+            cascade="all"
+        >
+
+            <key
+                column="DU"
+                  foreign-key="none"
+            >
+            </key>
+
+            <one-to-many
+                  class="org.apache.ode.store.hib.ProcessConfDaoImpl"
+            />
+
+      </bag>
+
+        <property
+            name="deployer"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="deployer"
+        />
+
+        <property
+            name="deployDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            column="DEPLOYDT"
+        />
+
+        <property
+            name="deploymentUnitDir"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="DIR"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-DeploymentUnitDaoImpl.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

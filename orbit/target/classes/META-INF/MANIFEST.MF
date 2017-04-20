@@ -1,0 +1,262 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.ode.bpel.elang.xquery10.compiler,org.apache
+ .ode.axis2.httpbinding,org.apache.ode.utils.xsd,org.apache.ode.bpel.r
+ untime.msgs,org.apache.ode.ql,org.apache.ode.activityRecovery.impl,or
+ g.apache.ode.axis2.hooks,org.apache.ode.utils.rmi,org.apache.ode.bpel
+ .iapi,org.apache.ode.bpel.schedules,org.apache.ode.ra.transports,org.
+ apache.ode.bpel.memdao,org.apache.ode.bpel.jca.clientapi,org.apache.o
+ de.bpel.engine,org.apache.ode.bpel.elang.xpath10.o,org.apache.ode.uti
+ ls,org.apache.ode.bpel.dd,org.apache.ode.bpel.evt,org.apache.ode.bpel
+ .dao,org.apache.ode.bpel.extvar.jdbc,org.apache.ode.ra.transports.rmi
+ ,org.apache.ode.il,org.apache.ode.agents.memory,org.apache.ode.axis2.
+ util,org.apache.ode.bpel.compiler.wsdl,org.apache.ode.jacob,org.apach
+ e.ode.jacob.soup,org.apache.ode.jacob.vpu,org.apache.ode.dao.jpa,org.
+ apache.ode.bpel.pmapi.impl,org.apache.ode.daohib.bpel.ql,org.apache.o
+ de.utils.xml.capture,org.apache.ode.utils.msg,org.apache.ode.bpel.com
+ piler,org.apache.ode.jca.server,org.apache.ode.bpel.engine.cron,org.a
+ pache.ode.bpel.evtproc,org.apache.ode.bpel.elang.xpath20.compiler,org
+ .apache.ode.utils.jmx,org.apache.ode.bpel.o,org.apache.ode.bpel.runti
+ me.monitor,org.apache.ode.bpel.elang.xquery10.runtime,org.apache.ode.
+ utils.trax,org.apache.ode.ql.tree,org.apache.ode.bpel.engine.migratio
+ n,org.apache.ode.bpel.runtime,org.apache.ode.bpel.engine.extvar,org.a
+ pache.ode.utils.stl,org.apache.ode.jacob.examples.synch,org.apache.od
+ e.bpel.runtime.channels,org.apache.ode.bpel.elang.xpath20.o,org.apach
+ e.ode.ra,org.apache.ode.jacob.classgen.testtypes,org.apache.ode.bpel.
+ compiler.api,org.apache.ode.axis2.deploy,org.apache.ode.daohib,org.ap
+ ache.ode.jca.server.rmi,org.apache.ode.jacob.ap,org.apache.ode.bpel.r
+ untime.extension,org.apache.ode.bpel.compiler.bom,org.apache.ode.bpel
+ .pmapi,org.apache.ode.bpel.dd.impl,org.apache.ode.bpel.jmx,org.apache
+ .ode.bpel.extension,org.apache.ode.store,org.apache.ode.daohib.bpel,o
+ rg.apache.ode.extension.longrunning,org.apache.ode.store.jpa,org.apac
+ he.ode.il.dbutil,org.apache.ode.ql.tree.nodes,org.apache.ode.schedule
+ r.simple,org.apache.ode.bpel.connector,org.apache.ode.utils.wsdl,org.
+ apache.ode.bpel.intercept,org.apache.ode.bpel.epr,org.apache.ode.util
+ s.http,org.apache.ode.utils.cli,org.apache.ode.axis2,org.apache.ode.b
+ pel.runtime.explang.konst,org.apache.ode.bpel.common,org.apache.ode.u
+ tils.fs,org.apache.ode.bpel.common.evt,org.apache.ode.axis2.service,o
+ rg.apache.ode.jacob.examples.sequence,org.apache.ode.bpel.schedules.i
+ mpl,org.apache.ode.bpel.explang,org.apache.ode.bpel.elang.xpath20.run
+ time,org.apache.ode.utils.xsl,org.apache.ode.bpel.engine.replayer,org
+ .apache.ode.bpel.bdi.breaks,org.apache.ode.bpel.evar,org.apache.ode.e
+ xtension.e4x,org.apache.ode.daohib.bpel.hobj,org.apache.ode.jacob.exa
+ mples.eratosthenes,org.apache.ode.bpel.elang.xquery10.o,org.apache.od
+ e.jacob.examples.cell,org.apache.ode.store.hib,org.apache.ode.bpel.el
+ ang,org.apache.ode.activityRecovery,org.apache.ode.bpel.elang.xpath10
+ .compiler,org.apache.ode.il.config,org.apache.ode.bpel.runtime.breaks
+ ,org.apache.ode.utils.uuid,org.apache.ode.bpel.elang.xpath10.runtime,
+ org.apache.ode.ql.jcc,org.apache.ode.ql.eval.skel,org.apache.ode.util
+ s.sax
+Private-Package: schemaorg_apache_xmlbeans.element.URI_SHA_1_37DA9692B
+ 7B0D4FDEB8151F548B12B09179A070C,schemaorg_apache_xmlbeans.element.URI
+ _SHA_1_79E61D1FA719D262BE6C38A4C2AE0A88FCF645C0,schemaorg_apache_xmlb
+ eans.element.http_3A_2F_2Fode_2Eapache_2Eorg_2FactivityRecovery,schem
+ aorg_apache_xmlbeans.element.http_3A_2F_2Fwww_2Eapache_2Eorg_2Fode_2F
+ schemas_2Fdd_2F2007_2F03,schemaorg_apache_xmlbeans.javaname.org.apach
+ e.ode.activityRecovery,schemaorg_apache_xmlbeans.javaname.org.apache.
+ ode.activityRecovery.FailureHandlingDocument,schemaorg_apache_xmlbean
+ s.javaname.org.apache.ode.bpel.dd,schemaorg_apache_xmlbeans.javaname.
+ org.apache.ode.bpel.dd.TBAMServerProfiles,schemaorg_apache_xmlbeans.j
+ avaname.org.apache.ode.bpel.dd.TCleanup,schemaorg_apache_xmlbeans.jav
+ aname.org.apache.ode.bpel.dd.TDeployment,schemaorg_apache_xmlbeans.ja
+ vaname.org.apache.ode.bpel.dd.TDeployment.Process,schemaorg_apache_xm
+ lbeans.javaname.org.apache.ode.bpel.dd.TInvoke,schemaorg_apache_xmlbe
+ ans.javaname.org.apache.ode.bpel.dd.TProcessEvents,schemaorg_apache_x
+ mlbeans.javaname.org.apache.ode.bpel.pmapi,schemaorg_apache_xmlbeans.
+ javaname.org.apache.ode.bpel.pmapi.CommunicationType,schemaorg_apache
+ _xmlbeans.javaname.org.apache.ode.bpel.pmapi.MockQueryRequestDocument
+ ,schemaorg_apache_xmlbeans.javaname.org.apache.ode.bpel.pmapi.MockQue
+ ryRequestDocument.MockQueryRequest,schemaorg_apache_xmlbeans.javaname
+ .org.apache.ode.bpel.pmapi.TEndpointReferences,schemaorg_apache_xmlbe
+ ans.javaname.org.apache.ode.bpel.pmapi.TFaultInfo,schemaorg_apache_xm
+ lbeans.javaname.org.apache.ode.bpel.pmapi.TInstanceInfo,schemaorg_apa
+ che_xmlbeans.javaname.org.apache.ode.bpel.pmapi.TInstanceSummary,sche
+ maorg_apache_xmlbeans.javaname.org.apache.ode.bpel.pmapi.TProcessInfo
+ ,schemaorg_apache_xmlbeans.javaname.org.apache.ode.bpel.pmapi.TProces
+ sProperties,schemaorg_apache_xmlbeans.javaname.org.apache.ode.bpel.pm
+ api.TScopeInfo,schemaorg_apache_xmlbeans.javaname.org.apache.ode.bpel
+ .pmapi.TScopeInfo.CorrelationSets,schemaorg_apache_xmlbeans.javaname.
+ org.apache.ode.bpel.pmapi.TVariableInfo,schemaorg_apache_xmlbeans.jav
+ aname.org.apache.ode.bpel.schedules,schemaorg_apache_xmlbeans.namespa
+ ce.URI_SHA_1_37DA9692B7B0D4FDEB8151F548B12B09179A070C,schemaorg_apach
+ e_xmlbeans.namespace.URI_SHA_1_79E61D1FA719D262BE6C38A4C2AE0A88FCF645
+ C0,schemaorg_apache_xmlbeans.namespace.http_3A_2F_2Fode_2Eapache_2Eor
+ g_2FactivityRecovery,schemaorg_apache_xmlbeans.namespace.http_3A_2F_2
+ Fwww_2Eapache_2Eorg_2Fode_2Fschemas_2Fdd_2F2007_2F03,schemaorg_apache
+ _xmlbeans.src,schemaorg_apache_xmlbeans.system.sF2239578B6CD4A4C37298
+ 6FE916CB4E0,schemaorg_apache_xmlbeans.type.URI_SHA_1_37DA9692B7B0D4FD
+ EB8151F548B12B09179A070C,schemaorg_apache_xmlbeans.type.URI_SHA_1_79E
+ 61D1FA719D262BE6C38A4C2AE0A88FCF645C0,schemaorg_apache_xmlbeans.type.
+ http_3A_2F_2Fwww_2Eapache_2Eorg_2Fode_2Fschemas_2Fdd_2F2007_2F03
+Ignore-Package: org.apache.ode.bpel.elang.xquery10.compiler,org.apache
+ .ode.axis2.httpbinding,org.apache.ode.bpel.runtime.msgs,org.apache.od
+ e.utils.xsd,org.apache.ode.ql,org.apache.ode.activityRecovery.impl,or
+ g.apache.ode.axis2.hooks,org.apache.ode.utils.rmi,org.apache.ode.bpel
+ .schedules,org.apache.ode.bpel.iapi,org.apache.ode.ra.transports,org.
+ apache.ode.bpel.memdao,org.apache.ode.bpel.jca.clientapi,org.apache.o
+ de.bpel.engine,org.apache.ode.bpel.elang.xpath10.o,org.apache.ode.uti
+ ls,org.apache.ode.bpel.dd,org.apache.ode.bpel.evt,org.apache.ode.bpel
+ .extvar.jdbc,org.apache.ode.bpel.dao,org.apache.ode.ra.transports.rmi
+ ,org.apache.ode.il,org.apache.ode.agents.memory,org.apache.ode.axis2.
+ util,org.apache.ode.bpel.compiler.wsdl,org.apache.ode.jacob,org.apach
+ e.ode.jacob.soup,org.apache.ode.jacob.vpu,org.apache.ode.dao.jpa,org.
+ apache.ode.bpel.pmapi.impl,org.apache.ode.daohib.bpel.ql,org.apache.o
+ de.utils.xml.capture,org.apache.ode.utils.msg,org.apache.ode.bpel.com
+ piler,org.apache.ode.jca.server,org.apache.ode.bpel.engine.cron,org.a
+ pache.ode.bpel.evtproc,org.apache.ode.bpel.elang.xpath20.compiler,org
+ .apache.ode.utils.jmx,org.apache.ode.bpel.o,org.apache.ode.bpel.runti
+ me.monitor,org.apache.ode.bpel.elang.xquery10.runtime,org.apache.ode.
+ utils.trax,org.apache.ode.ql.tree,org.apache.ode.bpel.runtime,org.apa
+ che.ode.bpel.engine.migration,org.apache.ode.bpel.engine.extvar,org.a
+ pache.ode.utils.stl,org.apache.ode.jacob.examples.synch,org.apache.od
+ e.bpel.runtime.channels,org.apache.ode.bpel.elang.xpath20.o,org.apach
+ e.ode.jacob.classgen.testtypes,org.apache.ode.ra,org.apache.ode.bpel.
+ compiler.api,org.apache.ode.axis2.deploy,org.apache.ode.daohib,org.ap
+ ache.ode.jca.server.rmi,org.apache.ode.jacob.ap,org.apache.ode.bpel.r
+ untime.extension,org.apache.ode.bpel.compiler.bom,org.apache.ode.bpel
+ .pmapi,org.apache.ode.bpel.jmx,org.apache.ode.bpel.dd.impl,org.apache
+ .ode.bpel.extension,org.apache.ode.store,org.apache.ode.daohib.bpel,o
+ rg.apache.ode.extension.longrunning,org.apache.ode.store.jpa,org.apac
+ he.ode.il.dbutil,org.apache.ode.ql.tree.nodes,org.apache.ode.schedule
+ r.simple,org.apache.ode.bpel.connector,org.apache.ode.utils.wsdl,org.
+ apache.ode.bpel.intercept,org.apache.ode.bpel.epr,org.apache.ode.util
+ s.cli,org.apache.ode.utils.http,org.apache.ode.axis2,org.apache.ode.b
+ pel.runtime.explang.konst,org.apache.ode.bpel.common,org.apache.ode.u
+ tils.fs,org.apache.ode.bpel.common.evt,org.apache.ode.axis2.service,o
+ rg.apache.ode.jacob.examples.sequence,org.apache.ode.bpel.schedules.i
+ mpl,org.apache.ode.bpel.explang,org.apache.ode.bpel.elang.xpath20.run
+ time,org.apache.ode.utils.xsl,org.apache.ode.bpel.engine.replayer,org
+ .apache.ode.bpel.bdi.breaks,org.apache.ode.bpel.evar,org.apache.ode.e
+ xtension.e4x,org.apache.ode.daohib.bpel.hobj,org.apache.ode.jacob.exa
+ mples.eratosthenes,org.apache.ode.bpel.elang.xquery10.o,org.apache.od
+ e.jacob.examples.cell,org.apache.ode.store.hib,org.apache.ode.bpel.el
+ ang,org.apache.ode.activityRecovery,org.apache.ode.bpel.elang.xpath10
+ .compiler,org.apache.ode.il.config,org.apache.ode.bpel.runtime.breaks
+ ,org.apache.ode.ql.jcc,org.apache.ode.bpel.elang.xpath10.runtime,org.
+ apache.ode.utils.uuid,org.apache.ode.ql.eval.skel,org.apache.ode.util
+ s.sax
+Bundle-ClassPath: .,ode-bpel-api-1.3.5-wso2v12-SNAPSHOT.jar,ode-bpel-r
+ untime-1.3.5-wso2v12-SNAPSHOT.jar,ode-bpel-compiler-1.3.5-wso2v12-SNA
+ PSHOT.jar,ode-bpel-extensions-long-running-1.0.0-wso2v12-SNAPSHOT.jar
+ ,ode-bpel-api-jca-1.3.5-wso2v12-SNAPSHOT.jar,ode-bpel-epr-1.3.5-wso2v
+ 12-SNAPSHOT.jar,ode-utils-1.3.5-wso2v12-SNAPSHOT.jar,ode-bpel-dao-1.3
+ .5-wso2v12-SNAPSHOT.jar,ode-bpel-obj-1.3.5-wso2v12-SNAPSHOT.jar,ode-b
+ pel-connector-1.3.5-wso2v12-SNAPSHOT.jar,ode-bpel-extensions-e4x-1.0.
+ 0-wso2v12-SNAPSHOT.jar,ode-jca-server-1.3.5-wso2v12-SNAPSHOT.jar,ode-
+ jca-ra-1.3.5-wso2v12-SNAPSHOT.jar,ode-scheduler-simple-1.3.5-wso2v12-
+ SNAPSHOT.jar,ode-bpel-schemas-1.3.5-wso2v12-SNAPSHOT.jar,ode-jacob-1.
+ 3.5-wso2v12-SNAPSHOT.jar,ode-dao-hibernate-1.3.5-wso2v12-SNAPSHOT.jar
+ ,ode-bpel-ql-1.3.5-wso2v12-SNAPSHOT.jar,ode-agents-1.3.5-wso2v12-SNAP
+ SHOT.jar,ode-dao-hibernate-db-1.3.5-wso2v12-SNAPSHOT.jar,ode-axis2-1.
+ 3.5-wso2v12-SNAPSHOT.jar,ode-bpel-store-1.3.5-wso2v12-SNAPSHOT.jar,od
+ e-dao-jpa-1.3.5-wso2v12-SNAPSHOT.jar
+Built-By: thilini
+Tool: Bnd-0.0.238
+Bundle-Name: ode
+Created-By: Apache Maven Bundle Plugin
+JPA-PersistenceUnits: ode-dao,ode-store
+DynamicImport-Package: *
+Build-Jdk: 1.6.0_45
+Bundle-Version: 1.3.5.wso2v12-SNAPSHOT
+Bnd-LastModified: 1422504593271
+Bundle-ManifestVersion: 2
+Bundle-Description: This bundle will represent ode jars
+Bundle-SymbolicName: ode
+Import-Package: com.hazelcast.core;resolution:=optional;version="3.0",
+ com.ibm.wsdl;resolution:=mandatory,com.ibm.wsdl.extensions.soap;resol
+ ution:=optional,com.ibm.wsdl.util.xml;resolution:=optional,com.ibm.ws
+ dl.xml;resolution:=optional,javax.activation;resolution:=optional,jav
+ ax.management;resolution:=optional,javax.management.openmbean;resolut
+ ion:=optional,javax.naming;resolution:=optional,javax.persistence;res
+ olution:=optional,javax.persistence.metamodel;resolution:=optional,ja
+ vax.resource;resolution:=optional,javax.resource.cci;resolution:=opti
+ onal,javax.resource.spi;resolution:=optional,javax.resource.spi.endpo
+ int;resolution:=optional,javax.security.auth;resolution:=optional,jav
+ ax.servlet;resolution:=optional,javax.servlet.http;resolution:=option
+ al,javax.sql;resolution:=optional,javax.transaction,javax.transaction
+ .xa,javax.wsdl,javax.wsdl.extensions,javax.wsdl.extensions.http,javax
+ .wsdl.extensions.mime,javax.wsdl.extensions.soap,javax.wsdl.factory,j
+ avax.wsdl.xml,javax.xml.namespace;resolution:=optional,javax.xml.pars
+ ers;resolution:=optional,javax.xml.stream;version="1.0.1",javax.xml.s
+ tream.events;version="1.0.1",javax.xml.stream.util;version="1.0.1",ja
+ vax.xml.transform;resolution:=optional,javax.xml.transform.dom;resolu
+ tion:=optional,javax.xml.transform.sax;resolution:=optional,javax.xml
+ .transform.stream;resolution:=optional,javax.xml.xpath;resolution:=op
+ tional,javax.xml.xquery;resolution:=optional,net.sf.saxon;version="[9
+ .0.0.x, 10.0)",net.sf.saxon.dom;version="[9.0.0.x, 10.0)",net.sf.saxo
+ n.expr;version="[9.0.0.x, 10.0)",net.sf.saxon.expr.sort;version="[9.0
+ .0.x, 10.0)",net.sf.saxon.functions;version="[9.0.0.x, 10.0)",net.sf.
+ saxon.lib;version="[9.0.0.x, 10.0)",net.sf.saxon.om;version="[9.0.0.x
+ , 10.0)",net.sf.saxon.pattern;version="[9.0.0.x, 10.0)",net.sf.saxon.
+ trans;version="[9.0.0.x, 10.0)",net.sf.saxon.type;version="[9.0.0.x, 
+ 10.0)",net.sf.saxon.value;version="[9.0.0.x, 10.0)",net.sf.saxon.xpat
+ h;version="[9.0.0.x, 10.0)",net.sf.saxon.xqj;version="[9.0.0.x, 10.0)
+ ",org.apache.axiom.om;version="[1.2.11.wso2v5, 1.3.0)",org.apache.axi
+ om.om.impl.builder;version="[1.2.11.wso2v5, 1.3.0)",org.apache.axiom.
+ om.impl.dom;version="[1.2.11.wso2v5, 1.3.0)",org.apache.axiom.om.impl
+ .llom.util;version="[1.2.11.wso2v5, 1.3.0)",org.apache.axiom.soap;ver
+ sion="[1.2.11.wso2v5, 1.3.0)",org.apache.axis2;version="[1.6.1.wso2v1
+ 1, 1.7.0)",org.apache.axis2.addressing;version="[1.6.1.wso2v11, 1.7.0
+ )",org.apache.axis2.client;version="[1.6.1.wso2v11, 1.7.0)",org.apach
+ e.axis2.context;version="[1.6.1.wso2v11, 1.7.0)",org.apache.axis2.dep
+ loyment;version="[1.6.1.wso2v11, 1.7.0)",org.apache.axis2.description
+ ;version="[1.6.1.wso2v11, 1.7.0)",org.apache.axis2.engine;version="[1
+ .6.1.wso2v11, 1.7.0)",org.apache.axis2.handlers;version="[1.6.1.wso2v
+ 11, 1.7.0)",org.apache.axis2.i18n;version="[1.6.1.wso2v11, 1.7.0)",or
+ g.apache.axis2.receivers;version="[1.6.1.wso2v11, 1.7.0)",org.apache.
+ axis2.transport;version="[1.6.1.wso2v11, 1.7.0)",org.apache.axis2.tra
+ nsport.http;version="[1.6.1.wso2v11, 1.7.0)",org.apache.axis2.util;ve
+ rsion="[1.6.1.wso2v11, 1.7.0)",org.apache.commons.beanutils;resolutio
+ n:=optional,org.apache.commons.collections.comparators;resolution:=op
+ tional,org.apache.commons.collections.map;resolution:=optional,org.ap
+ ache.commons.httpclient;resolution:=optional,org.apache.commons.httpc
+ lient.auth;resolution:=optional,org.apache.commons.httpclient.methods
+ ;resolution:=optional,org.apache.commons.httpclient.params;resolution
+ :=optional,org.apache.commons.httpclient.util;resolution:=optional,or
+ g.apache.commons.lang;resolution:=optional,org.apache.commons.logging
+ ;resolution:=optional,org.apache.geronimo.connector.outbound;resoluti
+ on:=optional,org.apache.geronimo.connector.outbound.connectionmanager
+ config;resolution:=optional,org.apache.geronimo.connector.outbound.co
+ nnectiontracking;resolution:=optional,org.apache.geronimo.transaction
+ .manager;resolution:=optional,org.apache.log4j;resolution:=optional,o
+ rg.apache.log4j.helpers;resolution:=optional,org.apache.neethi;resolu
+ tion:=optional,org.apache.openjpa.conf;resolution:=optional,org.apach
+ e.openjpa.ee;resolution:=optional,org.apache.openjpa.enhance;resoluti
+ on:=optional,org.apache.openjpa.jdbc.conf;resolution:=optional,org.ap
+ ache.openjpa.jdbc.sql;resolution:=optional,org.apache.openjpa.persist
+ ence;resolution:=optional,org.apache.openjpa.persistence.jdbc;resolut
+ ion:=optional,org.apache.openjpa.util;resolution:=optional,org.apache
+ .ws.commons.schema;resolution:=optional,org.apache.ws.commons.schema.
+ resolver;resolution:=optional,org.apache.xerces.dom;resolution:=optio
+ nal,org.apache.xerces.impl.xs;resolution:=optional,org.apache.xerces.
+ jaxp;resolution:=optional,org.apache.xerces.parsers;resolution:=optio
+ nal,org.apache.xerces.xni;resolution:=optional,org.apache.xerces.xni.
+ parser;resolution:=optional,org.apache.xerces.xs;resolution:=optional
+ ,org.apache.xml.serialize;resolution:=optional,org.apache.xml.utils;r
+ esolution:=optional,org.apache.xmlbeans;resolution:=optional,org.apac
+ he.xmlbeans.impl.values;resolution:=optional,org.apache.xmlbeans.xml.
+ stream;resolution:=optional,org.h2;resolution:=optional,org.hibernate
+ ;resolution:=optional,org.hibernate.cfg;resolution:=optional,org.hibe
+ rnate.classic;resolution:=optional,org.hibernate.connection;resolutio
+ n:=optional,org.hibernate.criterion;resolution:=optional,org.hibernat
+ e.dialect;resolution:=optional,org.hibernate.engine;resolution:=optio
+ nal,org.hibernate.exception;resolution:=optional,org.hibernate.id;res
+ olution:=optional,org.hibernate.transaction;resolution:=optional,org.
+ hibernate.type;resolution:=optional,org.hibernate.usertype;resolution
+ :=optional,org.hsqldb.jdbc;resolution:=optional,org.jaxen;resolution:
+ =optional,org.jaxen.dom;resolution:=optional,org.jaxen.expr;resolutio
+ n:=optional,org.jaxen.saxpath;resolution:=optional,org.jaxen.saxpath.
+ helpers;resolution:=optional,org.mozilla.javascript;resolution:=optio
+ nal,org.mozilla.javascript.debug;resolution:=optional,org.mozilla.jav
+ ascript.xml;resolution:=optional,org.mozilla.javascript.xmlimpl;resol
+ ution:=optional,org.springframework.context;resolution:=optional,org.
+ springframework.context.support;resolution:=optional,org.tranql.conne
+ ctor.jdbc;resolution:=optional,org.w3c.dom,org.w3c.dom.ls,org.xml.sax
+ ;resolution:=optional,org.xml.sax.helpers;resolution:=optional
+Embed-Dependency: ode-agents|ode-axis2|ode-bpel-api-jca|ode-bpel-api|o
+ de-scheduler-simple|ode-bpel-compiler|ode-bpel-connector|ode-bpel-dao
+ |ode-bpel-ql|ode-bpel-schemas|ode-bpel-store|ode-dao-jpa|ode-dao-hibe
+ rnate|ode-dao-hibernate-db|ode-bpel-runtime|ode-jacob|ode-jca-ra|ode-
+ jca-server|ode-bpel-epr|ode-bpel-obj|ode-bpel-extensions-e4x|ode-bpel
+ -extensions-long-running|ode-utils;scope=compile|runtime;inline=false
+ ;
+

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="org.apache.ode.daohib.bpel.hobj.HActivityRecovery"
+        table="BPEL_ACTIVITY_RECOVERY"
+    >
+
+        <id
+            name="id"
+            column="ID"
+            type="java.lang.Long"
+        >
+            <generator class="org.apache.ode.daohib.NativeHiLoGenerator">
+                <param name="sequence">hibernate_seqhilo</param>
+                <param name="max_lo">99</param>
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-HActivityRecovery.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <many-to-one
+            name="instance"
+            class="org.apache.ode.daohib.bpel.hobj.HProcessInstance"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            foreign-key="none"
+            column="PIID"
+        />
+
+        <property
+            name="activityId"
+            type="long"
+            update="true"
+            insert="true"
+            column="AID"
+        />
+
+        <property
+            name="channel"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="CHANNEL"
+        />
+
+        <property
+            name="reason"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="REASON"
+        />
+
+        <property
+            name="dateTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            column="DATE_TIME"
+        />
+
+        <property
+            name="details"
+            type="org.apache.ode.daohib.bpel.hobj.GZipDataType"
+            update="true"
+            insert="true"
+        >
+            <column
+                name="DETAILS" 
+                sql-type="blob(2G)"
+            />
+        </property>
+
+        <property
+            name="actions"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            column="ACTIONS"
+        />
+
+        <property
+            name="retries"
+            type="int"
+            update="true"
+            insert="true"
+            column="RETRIES"
+        />
+
+        <property
+            name="created"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="INSERT_TIME"
+        />
+
+        <property
+            name="lock"
+            type="int"
+            update="true"
+            insert="true"
+            column="MLOCK"
+            not-null="true"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-HActivityRecovery.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+        <query name="SELECT_ACTIVITY_RECOVERY_IDS_BY_INSTANCES"><![CDATA[
+            select id from HActivityRecovery as a where a.instance in (:instances)
+        ]]></query>
+
+</hibernate-mapping>
