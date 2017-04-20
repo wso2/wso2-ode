@@ -19,13 +19,22 @@
 
 package org.apache.ode.utils.xsl;
 
+import org.apache.commons.collections.map.MultiKeyMap;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.ode.utils.DOMUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.Map;
-
 import javax.xml.namespace.QName;
 import javax.xml.transform.ErrorListener;
+import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
@@ -36,13 +45,6 @@ import javax.xml.transform.URIResolver;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.collections.map.MultiKeyMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.ode.utils.DOMUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 /**
  * Singleton wrapping the basic <code>javax.xml.transform</code> operations. The
@@ -144,9 +146,19 @@ public class XslTransformHandler {
       }
       String method = tf.getOutputProperties().getProperty("method");
       if (method == null || "xml".equals(method)) {
-          DOMResult result = new DOMResult();
-          tf.transform(source, result);
-          Node node = result.getNode();
+
+          Node node;
+          if(tf.getOutputProperties().getProperty("cdata-section-elements") != null) {
+              StringWriter writer = new StringWriter();
+              Result result = new StreamResult(writer);
+              tf.transform(source, result);
+              node = DOMUtils.stringToDOM(writer.toString());
+          } else {
+              DOMResult result = new DOMResult();
+              tf.transform(source, result);
+              node = result.getNode();
+          }
+
           if(node.getNodeType() == Node.DOCUMENT_NODE)
               node = ((Document)node).getDocumentElement();
           if(__log.isDebugEnabled()) __log.debug("Returned node: type="+node.getNodeType()+", "+ DOMUtils.domToString(node));
@@ -165,6 +177,10 @@ public class XslTransformHandler {
       throw new XslTransformException(e);
     } catch (TransformerException e) {
       throw new XslTransformException("XSL Transformation failed!", e);
+    } catch (SAXException e) {
+      throw new XslTransformException("Failed to parse string writer to DOM element", e);
+    } catch (IOException e) {
+      throw new XslTransformException("Failed to parse string writer to DOM element", e);
     }
   }
 
