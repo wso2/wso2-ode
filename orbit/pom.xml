@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.wso2.bpel</groupId>
         <artifactId>ode</artifactId>
-        <version>1.3.5-wso2v18</version>
+        <version>1.3.5-wso3v18-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -757,8 +757,8 @@
         </plugins>
     </build>
     <properties>
-        <ode.version>1.3.5-wso2v18</ode.version>
-        <ode.extension.version>1.3.5-wso2v18</ode.extension.version>
+        <ode.version>1.3.5-wso3v18-SNAPSHOT</ode.version>
+        <ode.extension.version>1.3.5-wso3v18-SNAPSHOT</ode.extension.version>
         <maven.bundle.plugin.version>1.4.0</maven.bundle.plugin.version>
     </properties>
 </project>
