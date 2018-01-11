@@ -24,7 +24,7 @@
     <groupId>org.wso2.bpel</groupId>
     <artifactId>ode</artifactId>
     <packaging>pom</packaging>
-    <version>1.3.5-wso5v18-SNAPSHOT</version>
+    <version>1.3.5-wso2v19-SNAPSHOT</version>
 
     <name>ODE</name>
     <description>Apache ODE (Orchestration Director Engine) executes business processes written
