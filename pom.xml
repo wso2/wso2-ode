@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Licensed to the Apache Software Foundation (ASF) under one
   ~ or more contributor license agreements. See the NOTICE file
   ~ distributed with this work for additional information
@@ -17,15 +15,12 @@
   ~ KIND, either express or implied. See the License for the
   ~ specific language governing permissions and limitations
   ~ under the License.
-  -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.bpel</groupId>
     <artifactId>ode</artifactId>
     <packaging>pom</packaging>
     <version>1.3.5-wso2v20-SNAPSHOT</version>
-
     <name>ODE</name>
     <description>Apache ODE (Orchestration Director Engine) executes business processes written
         following the WS-BPEL standard. It talks to web services, sending and receiving messages,
@@ -33,27 +28,22 @@
         supports both long and short living process executions to orchestrate all the services that
         are part of your application.
     </description>
-
     <url>http://ode.apache.org</url>
-
     <parent>
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
         <version>1</version>
     </parent>
-
     <issueManagement>
         <system>jira</system>
         <url>https://issues.apache.org/jira/browse/ODE</url>
     </issueManagement>
-
     <scm>
         <url>https://github.com/wso2/wso2-ode.git</url>
         <developerConnection>scm:git:https://github.com/wso2/wso2-ode.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/wso2-ode.git</connection>
         <tag>HEAD</tag>
     </scm>
-
     <mailingLists>
         <mailingList>
             <name>Apache ODE Users List</name>
@@ -74,11 +64,8 @@
             <post>commits@ode.apache.org</post>
         </mailingList>
     </mailingLists>
-
     <properties>
-
         <ode.version>1.3.5-wso2v20-SNAPSHOT</ode.version>
-
         <activation.version>1.1</activation.version>
         <annogen.version>0.1.0</annogen.version>
         <antlr.version>2.7.7</antlr.version>
@@ -157,7 +144,6 @@
         <tranql.version>1.1</tranql.version>
         <xjavadoc.version>1.1-j5</xjavadoc.version>
         <jbi.version>1.1.0</jbi.version>
-
         <maven.incremental.plugin.version>1.3</maven.incremental.plugin.version>
         <maven.assembly.plugin.version>2.4</maven.assembly.plugin.version>
         <maven.build.helper.plugin.version>1.7</maven.build.helper.plugin.version>
@@ -167,10 +153,8 @@
         <sql.maven.plugin.version>1.2</sql.maven.plugin.version>
         <maven.javadoc.plugin.version>2.5</maven.javadoc.plugin.version>
         <xdoclet.maven.plugin.version>1.0</xdoclet.maven.plugin.version>
-
-	<project.scm.id>wso2-scm-server</project.scm.id>
+        <project.scm.id>wso2-scm-server</project.scm.id>
     </properties>
-
     <modules>
         <module>agents</module>
         <module>utils</module>
@@ -208,7 +192,6 @@
         <module>bpel-extensions/long-running</module>
         <module>orbit</module>
     </modules>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -229,7 +212,6 @@
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven.assembly.plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -237,9 +219,7 @@
                         <source>1.5</source>
                         <target>1.6</target>
                     </configuration>
-
                 </plugin>
-
                 <plugin>
                     <groupId>org.bsc.maven</groupId>
                     <artifactId>maven-processor-plugin</artifactId>
@@ -284,14 +264,11 @@
                         </execution>
                     </executions>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire.plugin.version}</version>
                 </plugin>
-
-
                 <!--|
             | This version uses xjavadoc-1.1-j5, which doesn't
             | complain on Java 5.0 constructs.
@@ -309,13 +286,11 @@
                         </dependency>
                     </dependencies>
                 </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>xmlbeans-maven-plugin</artifactId>
                     <version>${xmlbeans.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>sql-maven-plugin</artifactId>
@@ -333,7 +308,6 @@
                         </dependency>
                     </dependencies>
                 </plugin>
-
                 <!-- Allows direct usage of the javadoc:javadoc goal. -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -343,6 +317,55 @@
                         <minmemory>128m</minmemory>
                         <maxmemory>512m</maxmemory>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.0</version>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent-by-coverage-enforcer</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <propertyName>argLine</propertyName>
+                                <destFile>${project.build.directory}/jacoco.exec</destFile>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>default-report-by-coverage-enforcer</id>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <dataFile>${project.build.directory}/jacoco.exec</dataFile>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>default-check-by-coverage-enforcer</id>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                            <configuration>
+                                <dataFile>${project.build.directory}/jacoco.exec</dataFile>
+                                <rules>
+                                    <!-- implementation is needed only for Maven 2 -->
+                                    <rule implementation="org.jacoco.maven.RuleConfiguration">
+                                        <element>BUNDLE</element>
+                                        <limits>
+                                            <!-- implementation is needed only for Maven 2 -->
+                                            <limit implementation="org.jacoco.report.check.Limit">
+                                                <counter>LINE</counter>
+                                                <value>COVEREDRATIO</value>
+                                                <minimum>0.0</minimum>
+                                            </limit>
+                                        </limits>
+                                    </rule>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -373,8 +396,6 @@
             </plugin>
         </plugins>
     </build>
-
-
     <!--|
         | List of repositories for all the various dependencies,
         | and Maven plugins.
@@ -396,7 +417,6 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </repository>
-
         <repository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
@@ -407,7 +427,6 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </repository>
-
         <repository>
             <id>wso2.snapshots</id>
             <name>WSO2 Snapshot Repository</name>
@@ -421,7 +440,6 @@
             </releases>
         </repository>
     </repositories>
-
     <pluginRepositories>
         <pluginRepository>
             <id>wso2.releases</id>
@@ -433,7 +451,6 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </pluginRepository>
-
         <pluginRepository>
             <id>wso2.snapshots</id>
             <name>WSO2 Snapshot Repository</name>
@@ -457,7 +474,6 @@
             </releases>
         </pluginRepository>
     </pluginRepositories>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -745,7 +761,6 @@
                 <artifactId>geronimo-stax-api_1.0_spec</artifactId>
                 <version>${geronimo.stax-api.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpcore</artifactId>
@@ -862,14 +877,12 @@
                         <artifactId>xerces</artifactId>
                         <groupId>xerces</groupId>
                     </exclusion>
-
                     <exclusion>
                         <artifactId>xml-apis</artifactId>
                         <groupId>xml-apis</groupId>
                     </exclusion>
                 </exclusions>
             </dependency>
-
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate</artifactId>
@@ -883,7 +896,6 @@
                 </exclusions>
                 -->
             </dependency>
-
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
@@ -907,7 +919,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
             <dependency>
                 <groupId>net.sf.saxon</groupId>
                 <artifactId>Saxon-HE</artifactId>
@@ -933,7 +944,6 @@
                 <artifactId>xmlbeans</artifactId>
                 <version>${xmlbeans.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.thoughtworks.xstream</groupId>
                 <artifactId>xstream</artifactId>
@@ -949,7 +959,6 @@
                 <artifactId>apache-activemq</artifactId>
                 <version>${activemq.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
@@ -965,7 +974,6 @@
                 <artifactId>hsqldb</artifactId>
                 <version>${hsqldb.version}</version>
             </dependency>
-
             <!-- AXIS2 dependencies -->
             <dependency>
                 <groupId>org.apache.axis2</groupId>
@@ -1121,7 +1129,6 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>distro</id>
             <modules>
