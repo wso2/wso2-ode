@@ -30,4 +30,25 @@ public interface ODECluster {
     public List<String> getKnownNodes();
 
     public boolean isLeader();
+
+    /**
+     * Remove member from the cluster
+     *
+     * @param nodeId
+     */
+    public void removeMember(String nodeId);
+
+    /**
+     * Check whether this node is the Manager Node of the cluster
+     *
+     * @return
+     */
+    public boolean isManager();
+
+    /**
+     * Retrieve leader node of the cluster
+     *
+     * @return
+     */
+    public String getLeader();
 }

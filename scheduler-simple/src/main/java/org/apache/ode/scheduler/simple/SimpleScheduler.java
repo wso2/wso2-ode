@@ -73,6 +73,14 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
     /** Duration used to log a warning if a job scheduled at a date D is queued at D'>D+_warningDelay */
     long _warningDelay = 5*60*1000;
 
+    /** Duration used for DB based heartbeat */
+    long _secondaryHeartbeatInterval = 20000;
+
+    int _staleNodeThresholdFactor = 4;
+
+    /** Database based heartbeat for stale node recovery enabled */
+    boolean _secondaryHeartbeatEnabled = false;
+
     /**
      * Estimated sustained transaction per second capacity of the system.
      * e.g. 100 means the system can process 100 jobs per seconds, on average
@@ -153,6 +161,19 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
 
         _immediateTransactionRetryLimit = getIntProperty(conf, "ode.scheduler.immediateTransactionRetryLimit", _immediateTransactionRetryLimit);
         _immediateTransactionRetryInterval = getLongProperty(conf, "ode.scheduler.immediateTransactionRetryInterval", _immediateTransactionRetryInterval);
+
+        String secondaryHeartbeatEnabledStr = conf.getProperty("ode.secondary.stale.node.detection.enable");
+        if (secondaryHeartbeatEnabledStr != null && Boolean.valueOf(secondaryHeartbeatEnabledStr)) {
+            __log.info("Secondary Stale Node Detection Enabled");
+            _secondaryHeartbeatEnabled = Boolean.valueOf(secondaryHeartbeatEnabledStr);
+
+            _secondaryHeartbeatInterval =
+                    getLongProperty(conf, "ode.secondary.stale.node.detection.hb.interval", _secondaryHeartbeatInterval);
+
+            _staleNodeThresholdFactor =
+                    getIntProperty(conf, "ode.secondary.stale.node.detection.threshold.factor", _staleNodeThresholdFactor);
+        }
+
 
         if (__log.isDebugEnabled()) {
             __log.debug("ode.scheduler.queueLength == " + _todoLimit);
@@ -468,6 +489,7 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         _todo.clearTasks(UpgradeJobsTask.class);
         _todo.clearTasks(LoadImmediateTask.class);
         _todo.clearTasks(CheckStaleNodes.class);
+        _todo.clearTasks(UpdateDBHeartBeat.class);
         _processedSinceLastLoadTask.clear();
         _outstandingJobs.clear();
 
@@ -491,15 +513,42 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
             }
         //}
 
+        if (__log.isDebugEnabled()) {
+            __log.debug("Known nodes from DB at scheduler start : " + _knownNodes);
+        }
+
         // Get all nodes from cluster.
         if (cluster != null && cluster.isClusterEnabled()) {
             List<String> knownNodesInCluster = cluster.getKnownNodes();
+
+            if (__log.isDebugEnabled()) {
+                __log.debug("Known nodes from cluster at scheduler startup : " + knownNodesInCluster);
+            }
             _knownNodes.addAll(knownNodesInCluster);
         }
         long now = System.currentTimeMillis();
 
         // Pretend we got a heartbeat...
         for (String s : _knownNodes) _lastHeartBeat.put(s, now);
+
+        if (__log.isDebugEnabled()) {
+            __log.debug("Heart beat map at scheduler startup : " + _lastHeartBeat);
+        }
+
+        // Add this node to DB based ode cluster table
+        if (_secondaryHeartbeatEnabled && cluster != null && cluster.isClusterEnabled()) {
+            try {
+                execTransaction(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        _db.insertNode(_nodeId, System.currentTimeMillis(), cluster.getLeader());
+                        return null;
+                    }
+                });
+            } catch (Exception ex) {
+                __log.error("Error occurred while adding this node to DB cluster table", ex);
+                throw new ContextException("Error occurred while adding this node to DB cluster table", ex);
+            }
+        }
 
         // schedule immediate job loading for now!
         _todo.enqueue(new LoadImmediateTask(now));
@@ -510,6 +559,11 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
 
         // do the upgrade sometime (random) in the immediate interval.
         _todo.enqueue(new UpgradeJobsTask(now + randomMean(_immediateInterval)));
+
+        // schedule DB based heartbeat
+        if (_secondaryHeartbeatEnabled && cluster != null && cluster.isClusterEnabled()) {
+            _todo.enqueue(new UpdateDBHeartBeat(now + randomMean(_secondaryHeartbeatInterval)));
+        }
 
         _todo.start();
         _running = true;
@@ -839,6 +893,8 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
     private List<String> updateHeartBeatAndGetStaleNodes() {
         if (__log.isDebugEnabled()) {
             __log.debug("Get Staled nodes started.");
+            __log.debug("Start _lastHeartBeat : " + _lastHeartBeat);
+            __log.debug("Start _knownNodes : " + _knownNodes);
         }
         List<String> staleNodes = new ArrayList<String>();
         if (cluster != null) {
@@ -866,6 +922,13 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
                             }
                         }
                     }
+
+                    if (__log.isDebugEnabled()) {
+                        __log.debug("After heartbeat update");
+                        __log.debug("_lastHeartBeat : " + _lastHeartBeat);
+                        __log.debug("_knownNodes : " + _knownNodes);
+                    }
+
                     // Checking for stale nodes.
                     for (String nodeID : _lastHeartBeat.keySet()) {
                         if (_lastHeartBeat.get(nodeID) != currentHeartbeat) {
@@ -897,6 +960,118 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
             }
         }
         return staleNodes;
+    }
+
+    private List<Node> getStaleNodesFromSecondaryHeartbeat(List<String> detectedStaleNodes) {
+
+        List<Node> staleNodes = new ArrayList<Node>();
+        if (cluster != null && cluster.isClusterEnabled() && cluster.isManager()) {
+
+            __log.debug("[BEGIN] Secondary DB based stale node detection");
+
+            List<Node> clusterNodes = new ArrayList<Node>();
+            List<Node> unknownNodes = new ArrayList<Node>();
+
+            try {
+                clusterNodes = execTransaction(new Callable<List<Node>>() {
+                    public List<Node> call() throws Exception {
+                        return _db.retrieveClusterNodes(cluster.getLeader());
+                    }
+                });
+                if (__log.isDebugEnabled()) {
+                    __log.debug("Cluster node List from DB : " + clusterNodes);
+                }
+            } catch (Exception e) {
+                __log.error("Error occurred while retrieving nodes in the cluster", e);
+            }
+
+            long currentTime = System.currentTimeMillis();
+            long staleThreshold = _secondaryHeartbeatInterval * _staleNodeThresholdFactor;
+            String clusterLeader = cluster.getLeader();
+
+            for (Node node : clusterNodes) {
+                // Check for DB level heartbeat
+                if ((currentTime - node.getHeartbeat()) > staleThreshold) {
+                    __log.info("Stale node detected by DB based in secondary scan: " + node.getNodeId());
+                    if (_knownNodes.contains(node.getNodeId())) {
+                        // Stalled node not detected by the hazelcast hence forcefully removing from the cluster
+                        if (__log.isDebugEnabled()) {
+                            __log.debug("Stalled node not detected by the hazelcast hence forcefully removing " +
+                                    "from the cluster:" + node.getNodeId());
+                        }
+                        staleNodes.add(node);
+                    } else {
+                        // Unknown, stalled node detected in ODE_CLUSTER which already removed from knownNodes
+                        // There is possible two cases :
+                        //          1. Member left detected and already removed by main stale node detection
+                        //          2. Split-brain situation
+                        // Therefore need to process later
+
+                        //Hence cleanup DB entry in ODE_CLUSTER table
+                        if (__log.isDebugEnabled()) {
+                            __log.debug("Unknown node detected in ODE_CLUSTER : " + node.getNodeId());
+                        }
+                        unknownNodes.add(node);
+                    }
+
+                } else if (!detectedStaleNodes.contains(node.getNodeId()) && !_knownNodes.contains(node.getNodeId()) &&
+                            node.getLeaderNode() != null && !node.getLeaderNode().equals(clusterLeader)) {
+                    __log.warn("Unknown node detected:" + node + ". Probably split-brain");
+                    // Set leader node to null for nodes outside this cluster
+                    Node splitNode = new Node(node.getNodeId(), 0, null);
+                    // Add to stale node list
+                    staleNodes.add(splitNode);
+                }
+            }
+
+            // If there is unknownNodes, we need to check whether it is caused due to split brain
+            if (unknownNodes.size() > 0) {
+                try {
+                    List<String> jobNodeList = execTransaction(new Callable<List<String>>() {
+                        public List<String> call() throws Exception {
+                            return _db.getNodeIds();
+                        }
+                    });
+                    if (__log.isDebugEnabled()) {
+                        __log.debug("Distinct nodes that jobs scheduled :" + jobNodeList);
+                    }
+
+                    for (Node node : unknownNodes) {
+                        if (jobNodeList.contains(node.getNodeId())) {
+                            __log.warn("Unknown node detected in ODE_CLUSTER, marked as split node : " + node);
+                            __log.fatal("BPS Cluster Split-brain detected : " + node);
+                            // Set leader node to null for nodes outside this cluster
+                            Node splitNode = new Node(node.getNodeId(), 0, null);
+                            // Add to stale node list
+                            staleNodes.add(splitNode);
+                        } else {
+                            __log.warn("Unknown node detected in ODE_CLUSTER, marked as stalled : " + node);
+                            staleNodes.add(node);
+                        }
+                    }
+                } catch (Exception ex) {
+                    __log.error("Error retrieving distinct node list.", ex);
+                    throw new ContextException("Error retrieving distinct node list.", ex);
+                }
+            }
+
+            __log.debug("[END] Secondary DB based stale node detection");
+        }
+        return staleNodes;
+    }
+
+    private boolean removeNode (final String nodeId) {
+        try {
+            execTransaction(new Callable<Void>() {
+                public Void call() throws Exception {
+                    _db.removeNode(nodeId);
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            __log.error("Error occurred while removing Unknown, stalled node detected in DB cluster list", e);
+        }
+        return true;
     }
 
     boolean doLoadImmediate() {
@@ -1114,6 +1289,44 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
         }
 
     }
+
+    /**
+     * Function to re-assign split node's jobs to self.
+     *
+     * @param nodeId nodeId of the split node
+     */
+    void recoverSplitNode(final String nodeId) {
+
+        if (__log.isDebugEnabled()) {
+            __log.debug("recovering split node " + nodeId);
+        }
+        if (cluster != null && cluster.isClusterEnabled() && cluster.isManager()) {
+            // Manager recovering stale nodes.
+            __log.info("recovering split node " + nodeId + " Started");
+            try {
+                int numrows = execTransaction(new Callable<Integer>() {
+                    public Integer call() throws Exception {
+                        return _db.updateReassign(nodeId, _nodeId);
+                    }
+                });
+
+                __log.debug("reassigned " + numrows + " jobs to self. ");
+
+                // We can now forget about this node, if we see it again, it will be
+                // "new to us"
+                _knownNodes.remove(nodeId);
+                _lastHeartBeat.remove(nodeId);
+
+                // Force a load-immediate to catch anything new from the recovered node.
+                doLoadImmediate();
+            } catch (Exception ex) {
+                __log.error("Database error reassigning node.", ex);
+            } finally {
+                __log.debug("node recovery complete");
+            }
+        }
+    }
+
 /**
  * recoverStaleNode method of old ode clustering implementation BPS-675
     void recoverStaleNode(final String nodeId) {
@@ -1227,8 +1440,72 @@ public class SimpleScheduler implements Scheduler, TaskRunner {
             for (String nodeId : staleNodes) {
                 recoverStaleNode(nodeId);
             }
+            // Secondary DB based stale node detection
+            if (_secondaryHeartbeatEnabled && cluster != null && cluster.isManager()) {
+                __log.debug("Secondary CHECK STALE NODES started");
+                List<Node> staleNodesDetection = getStaleNodesFromSecondaryHeartbeat(staleNodes);
+                for (Node node : staleNodesDetection) {
+                    if (node.getLeaderNode() == null) {
+                        // If leader node is null, caused from cluster split-brain
+                        // Reassign all the jobs to self (Manager node)
+                        recoverSplitNode(node.getNodeId());
+                    } else {
+                        cluster.removeMember(node.getNodeId());
+                    }
+                    // Remove node from the DB (This ensures only running nodes persisted in ODE_CLUSTER table)
+                    removeNode(node.getNodeId());
+                }
+            } else {
+                __log.debug("This is not cluster manager node, hence skip secondary heartbeat scan");
+            }
         }
     }
+
+    /**
+     * Update heartbeat in ODE_CLUSTER table
+     */
+    private class UpdateDBHeartBeat extends SchedulerTask {
+        UpdateDBHeartBeat(long schedDate) {
+            super(schedDate);
+        }
+
+        public void run() {
+            _todo.enqueue(new UpdateDBHeartBeat(System.currentTimeMillis() + _secondaryHeartbeatInterval));
+
+            if (__log.isDebugEnabled()) {
+                __log.debug("[BEGIN] UpdateDBHeartBeat : " + _nodeId);
+            }
+
+            try {
+                boolean hbSuccess = execTransaction(new Callable<Boolean>() {
+                    public Boolean call() throws Exception {
+                        return _db.updateNodeHeartbeat(_nodeId, System.currentTimeMillis(), cluster.getLeader());
+                    }
+                });
+
+                if (!hbSuccess) {
+                    if (__log.isDebugEnabled()) {
+                        __log.debug("Heartbeat entry in ODE_CLUSTER has been removed by manager node, re-insert heartbeat entry");
+                    }
+                    execTransaction(new Callable<Boolean>() {
+                        public Boolean call() throws Exception {
+                            return _db.insertNode(_nodeId, System.currentTimeMillis(), cluster.getLeader());
+                        }
+                    });
+                }
+            } catch (Exception ex) {
+                String msg = "Error occurred while publishing heartbeat to DB";
+                __log.error(msg, ex);
+                throw new ContextException(msg, ex);
+            }
+
+            if (__log.isDebugEnabled()) {
+                __log.debug("[END] UpdateDBHeartBeat : " + _nodeId);
+            }
+
+        }
+    }
+
 
 /**
  * run method of old ode clustering implementation BPS-675

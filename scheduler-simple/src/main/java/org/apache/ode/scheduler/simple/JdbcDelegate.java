@@ -30,29 +30,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.math.BigDecimal;
 
 import javax.sql.DataSource;
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-import javax.xml.namespace.QName;
 
 import org.apache.ode.bpel.dao.BpelDAOConnectionFactory;
 //import org.apache.ode.bpel.engine.BpelServerImpl;
 import org.apache.ode.bpel.iapi.Scheduler;
 import org.apache.ode.bpel.iapi.Scheduler.JobDetails;
 import org.apache.ode.dao.jpa.BPELDAOConnectionFactoryImpl;
-import org.apache.ode.dao.jpa.BPELDAOConnectionImpl;
 import org.apache.ode.utils.DbIsolation;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ode.utils.DbIsolation;
 import org.apache.ode.utils.StreamUtils;
 
 /**
@@ -126,6 +118,17 @@ public class JdbcDelegate implements DatabaseDelegate {
         + "detailsExt"
         + " from ODE_JOB "
             + "where nodeid = ? and ts < ? order by ts";
+
+    private static final String ADD_CLUSTER_NODE = "insert into ODE_CLUSTER "
+            + " (nodeid, heartbeat, leaderNode) values(?, ?, ?)";
+
+    private static final String UPDATE_CLUSTER_NODE = "update ODE_CLUSTER set heartbeat = ?, leaderNode = ? " +
+            "where nodeid = ?";
+
+    private static final String GET_CLUSTER_NODES = "select * from ODE_CLUSTER";
+
+    private static final String DELETE_CLUSTER_NODE = "delete from ODE_CLUSTER where nodeid = ?";
+
 
 //  public Long instanceId;
 //  public String mexId;
@@ -298,6 +301,106 @@ public class JdbcDelegate implements DatabaseDelegate {
         else if (o instanceof Integer) return (Integer) o;
         else throw new IllegalStateException("Can't convert to integer " + o.getClass());
     }
+
+
+    public boolean insertNode(String nodeId, long heartbeat, String leaderNodeId) throws DatabaseException {
+
+        if (__log.isDebugEnabled())
+            __log.debug("insertNode " + nodeId + " [ heartbeat = " + heartbeat + " leaderNodeId = " + leaderNodeId + "]");
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            int i = 1;
+            con = getConnection();
+            ps = con.prepareStatement(ADD_CLUSTER_NODE);
+            ps.setString(i++, nodeId);
+            ps.setLong(i++, heartbeat);
+            ps.setString(i++, leaderNodeId);
+
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException se) {
+            throw new DatabaseException(se);
+        } finally {
+            close(ps);
+            close(con);
+        }
+    }
+
+    public boolean removeNode(String nodeId) throws DatabaseException {
+        if (__log.isDebugEnabled())
+            __log.debug("removeNode from cluster table : " + nodeId);
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(DELETE_CLUSTER_NODE);
+            ps.setString(1, nodeId);
+
+            return ps.executeUpdate() == 0;
+        } catch (SQLException se) {
+            throw new DatabaseException(se);
+        } finally {
+            close(ps);
+            close(con);
+        }
+    }
+
+    public List<Node> retrieveClusterNodes(String clusterLeaderNode) throws DatabaseException {
+        if (__log.isDebugEnabled())
+            __log.debug("retrieveClusterNodes from cluster table");
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(GET_CLUSTER_NODES);
+            ps.setMaxRows(100);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Node> nodes = new ArrayList<Node>();
+            while (rs.next()) {
+                String nodeId = rs.getString(1);
+                long heartbeat = rs.getLong(2);
+                String leaderNode = rs.getString(3);
+
+                Node node = new Node(nodeId, heartbeat, leaderNode);
+                nodes.add(node);
+
+                if (__log.isDebugEnabled())
+                    __log.debug("Node retrieved from DB : " + node.getNodeId());
+            }
+            return nodes;
+        } catch (SQLException se) {
+            throw new DatabaseException(se);
+        } finally {
+            close(ps);
+            close(con);
+        }
+    }
+
+    public boolean updateNodeHeartbeat(String nodeId, long heartbeat, String leaderNodeId) throws DatabaseException {
+        if (__log.isDebugEnabled())
+            __log.debug("updateNodeHeartbeat: " + nodeId + " ---> [ heartbeat:" + heartbeat + ", leaderNodeId:" +
+                    leaderNodeId + " ]");
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(UPDATE_CLUSTER_NODE);
+            ps.setLong(1, heartbeat);
+            ps.setString(2, leaderNodeId);
+            ps.setString(3, nodeId);
+            return ps.executeUpdate() == 1;
+        } catch (SQLException se) {
+            throw new DatabaseException(se);
+        } finally {
+            close(ps);
+            close(con);
+        }
+    }
+    
 
     @SuppressWarnings("unchecked")
     public List<Job> dequeueImmediate(String nodeId, long maxtime, int maxjobs) throws DatabaseException {

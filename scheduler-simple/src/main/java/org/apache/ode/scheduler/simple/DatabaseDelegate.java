@@ -107,4 +107,13 @@ public interface DatabaseDelegate {
     public void acquireTransactionLocks();
     
     public void deleteAllJobs();
+
+    public boolean insertNode(String nodeId, long heartbeat, String leaderNodeId) throws DatabaseException;
+
+    public boolean removeNode(String nodeId) throws DatabaseException;
+
+    public boolean updateNodeHeartbeat(String nodeId, long heartbeat, String leaderNodeId) throws DatabaseException;
+
+    public List<Node> retrieveClusterNodes(String leaderNode) throws DatabaseException;
+
 }
