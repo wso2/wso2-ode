@@ -84,9 +84,8 @@
       <artifactId>serp</artifactId>
     </dependency>
       <dependency>
-          <groupId>com.hazelcast</groupId>
+          <groupId>org.wso2.orbit.com.hazelcast</groupId>
           <artifactId>hazelcast</artifactId>
-          <version>${orbit.version.hazelcast}</version>
       </dependency>
     </dependencies>
 
