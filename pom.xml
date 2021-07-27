@@ -120,7 +120,7 @@
         <stax-api.version>1.0</stax-api.version>
         <xerces.version>2.9.0</xerces.version>
         <xmlresolver.version>1.2</xmlresolver.version>
-        <xmlbeans.version>2.3.0</xmlbeans.version>
+        <xmlbeans.version>3.0.0</xmlbeans.version>
         <xstream.version>1.2</xstream.version>
         <junit.version>4.4</junit.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
