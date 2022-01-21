@@ -140,7 +140,7 @@
         <orbit.version.hazelcast.wso2>3.12.2.wso2v1</orbit.version.hazelcast.wso2>
         <orbit.version.hazelcast>3.0.1</orbit.version.hazelcast>
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
-        <version.h2.engine>1.2.140</version.h2.engine>
+        <version.h2.engine>2.1.210</version.h2.engine>
         <tranql.version>1.1</tranql.version>
         <xjavadoc.version>1.1-j5</xjavadoc.version>
         <jbi.version>1.1.0</jbi.version>
