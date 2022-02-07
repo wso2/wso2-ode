@@ -113,7 +113,7 @@
         <jetty.version>6.1.5</jetty.version>
         <jencks.version>2.1</jencks.version>
         <jasper.version>4.2.20RC0</jasper.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>2.17.1</log4j.version>
         <saxon.version>9.4</saxon.version>
         <servicemix.version>3.3</servicemix.version>
         <slf4j.version>1.5.10</slf4j.version>
@@ -897,8 +897,8 @@
                 -->
             </dependency>
             <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
                 <exclusions>
                     <exclusion>
