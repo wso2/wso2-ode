@@ -737,6 +737,9 @@
                         <_exportcontents>
                             org.apache.ode.*;-split-package:=merge-last
                         </_exportcontents>
+                        <Private-Package>
+                            org.apache.ode.*;
+                        </Private-Package>
                         <Import-Package>
                             !org.apache.ode.*,
                             com.ibm.wsdl;resolution:=mandatory,
