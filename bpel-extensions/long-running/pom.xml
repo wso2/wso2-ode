@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.bpel.extensions</groupId>
     <artifactId>ode-bpel-extensions-long-running</artifactId>
-    <version>1.3.5-wso2v23</version>
+    <version>1.3.5-wso2v24-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>ODE :: Extensions Long Running</name>
 
   <parent>
     <groupId>org.wso2.bpel</groupId>
     <artifactId>ode</artifactId>
-    <version>1.3.5-wso2v23</version>
+    <version>1.3.5-wso2v24-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
