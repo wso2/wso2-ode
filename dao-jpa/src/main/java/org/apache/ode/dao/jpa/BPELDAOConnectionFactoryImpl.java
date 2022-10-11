@@ -74,7 +74,9 @@ public class BPELDAOConnectionFactoryImpl implements BpelDAOConnectionFactoryJDB
             if (delegate instanceof EntityManagerImpl) {
             	EntityManagerImpl em = (EntityManagerImpl) delegate;
                 __log.debug(" getting the delegate from entity manager");
-                em.beginStore();
+                if(!em.getTransaction().isActive()){
+                    em.getTransaction().begin();
+                }
                 Object conn = em.getConnection();
                 return (Connection) conn;
             } else {
