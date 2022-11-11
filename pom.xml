@@ -125,7 +125,7 @@
         <junit.version>4.4</junit.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
         <persistence-api.version>1.0</persistence-api.version>
-        <xalan.version>2.7.1</xalan.version>
+        <xalan.version>2.7.2</xalan.version>
         <ant.version>1.6.5</ant.version>
         <openjpa.version>2.2.0-wso2v1</openjpa.version>
         <serp.version>1.13.1</serp.version>
