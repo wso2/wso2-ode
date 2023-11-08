@@ -130,7 +130,7 @@
         <openjpa.version>2.2.0-wso2v1</openjpa.version>
         <serp.version>1.13.1</serp.version>
         <dom4j.version>1.6.1</dom4j.version>
-        <derby.version>10.5.3.0_1</derby.version>
+        <derby.version>10.14.2.0</derby.version>
         <jmock.version>1.2.0</jmock.version>
         <xml.parser.version>2.6.2</xml.parser.version>
         <activemq.version>4.1.1</activemq.version>
