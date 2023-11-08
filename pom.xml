@@ -127,7 +127,7 @@
         <persistence-api.version>1.0</persistence-api.version>
         <xalan.version>2.7.1</xalan.version>
         <ant.version>1.6.5</ant.version>
-        <openjpa.version>2.2.0-wso2v1</openjpa.version>
+        <openjpa.version>2.2.2</openjpa.version>
         <serp.version>1.13.1</serp.version>
         <dom4j.version>1.6.1</dom4j.version>
         <derby.version>10.5.3.0_1</derby.version>
